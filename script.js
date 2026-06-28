@@ -69,10 +69,22 @@ function openSizePopup(pName, pPrice, pOrigPrice) {
     selectedSize = "";
 
     document.getElementById("popupProductName").innerText = pName;
-    document.getElementById("popupProductPrice").innerHTML = 
-        `₹${pPrice} <span class="popup-orig-price">₹${pOrigPrice}</span>`;
+
+    // Price display with strikethrough orig price
+    const discount = pOrigPrice > pPrice ? Math.round((1 - pPrice / pOrigPrice) * 100) : 0;
+    document.getElementById("popupProductPrice").innerHTML =
+        `₹${pPrice.toLocaleString('en-IN')} <span class="popup-orig-price">₹${pOrigPrice.toLocaleString('en-IN')}</span>`;
+
+    const badge = document.getElementById("popupDiscountBadge");
+    if (discount > 0) {
+        badge.textContent = discount + "% off";
+        badge.classList.add("visible");
+    } else {
+        badge.classList.remove("visible");
+    }
+
     document.getElementById("qtyValue").innerText = "1";
-    document.getElementById("popupLineTotal").innerText = "₹" + pPrice;
+    document.getElementById("popupLineTotal").innerText = "₹" + pPrice.toLocaleString('en-IN');
 
     document.querySelectorAll(".size-buttons button").forEach(btn => {
         btn.classList.remove("active");
@@ -80,14 +92,22 @@ function openSizePopup(pName, pPrice, pOrigPrice) {
 
     // Update button text based on action
     const confirmBtn = document.getElementById("confirmActionBtn");
+    const buySecBtn = document.getElementById("buyNowSecondaryBtn");
+
     if (isBuyNow) {
         confirmBtn.innerHTML = '<i class="fas fa-bolt"></i> Buy Now';
         confirmBtn.className = 'buy-btn';
         confirmBtn.onclick = confirmBuyNow;
+        buySecBtn.style.display = 'none';
     } else {
-        confirmBtn.innerHTML = '<i class="fas fa-shopping-cart"></i> Add To Cart';
+        confirmBtn.innerHTML = '<i class="fas fa-shopping-bag"></i> Add to Cart';
         confirmBtn.className = 'confirm-btn';
         confirmBtn.onclick = confirmAddToCart;
+        buySecBtn.style.display = 'flex';
+        buySecBtn.onclick = function() {
+            isBuyNow = true;
+            confirmBuyNow();
+        };
     }
 
     document.getElementById("sizePopup").style.display = "flex";
