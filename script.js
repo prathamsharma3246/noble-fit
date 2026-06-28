@@ -67,31 +67,60 @@ function selectSize(size){
 function confirmAddToCart(){
 
     if(selectedSize==""){
-
         alert("Please Select Size");
-
         return;
-
     }
 
     cartCount++;
-
-    document.getElementById("cartCount").innerText=cartCount;
+    document.getElementById("cartCount").innerText = cartCount;
 
     cartItems.push({
-
-        name:selectedProduct,
-
-        price:selectedPrice,
-
-        size:selectedSize
-
+        name: selectedProduct,
+        price: selectedPrice,
+        size: selectedSize
     });
 
-    alert(selectedProduct+" Added Successfully");
+    const cartItemsEl = document.getElementById('cartItems');
+
+    const emptyMsg = cartItemsEl.querySelector('.empty-msg');
+    if(emptyMsg){
+        emptyMsg.remove();
+    }
+
+    const itemIndex = cartItems.length - 1;
+
+    const itemRow = document.createElement('div');
+
+    itemRow.style.cssText =
+    'display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;border-bottom:1px solid var(--border-color);padding-bottom:10px;';
+
+    itemRow.innerHTML = `
+        <div>
+            <p style="font-weight:600;">${selectedProduct}</p>
+
+            <p style="font-size:13px;color:gray;">
+                Size : ${selectedSize}
+            </p>
+
+            <p style="color:var(--accent-color);">
+                ₹${selectedPrice}
+            </p>
+        </div>
+
+        <i class="fas fa-trash-alt"
+        style="cursor:pointer;color:red;"
+        onclick="removeItem(this, ${selectedPrice}, ${itemIndex})"></i>
+    `;
+
+    cartItemsEl.appendChild(itemRow);
+
+    updateTotal(selectedPrice);
+
+    cartSidebar.classList.add('active');
 
     document.getElementById("sizePopup").style.display="none";
 
+    selectedSize="";
 }
 
 // --- Remove from Cart ---
