@@ -656,3 +656,627 @@ footer { background: #000; color: #fff; padding: 50px 20px; text-align: center; 
 .confirm-btn:hover{
     background:#c39b22;
 }
+
+/* ========================================
+   NOBLE FIT - ENHANCED ECOMMERCE STYLES
+   ======================================== */
+
+/* --- Size Popup Overlay --- */
+.size-popup {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    z-index: 4000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.size-popup .popup-box {
+    background: var(--bg-color);
+    width: 100%;
+    max-width: 440px;
+    padding: 35px 30px 25px;
+    position: relative;
+    border-top: 3px solid var(--accent-color);
+    animation: slideUp 0.3s ease;
+    border-radius: 2px;
+}
+
+/* Popup Product Header */
+.popup-product-header {
+    margin-bottom: 6px;
+}
+
+#popupProductName {
+    font-size: 22px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    line-height: 1.3;
+}
+
+#popupProductPrice {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent-color);
+    margin-bottom: 4px;
+}
+
+.popup-orig-price {
+    font-size: 15px;
+    color: gray;
+    text-decoration: line-through;
+    margin-left: 8px;
+    font-weight: 400;
+}
+
+.popup-desc {
+    color: #888;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+/* Popup Sections */
+.popup-section {
+    margin-bottom: 20px;
+}
+
+.popup-section-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-color);
+    margin-bottom: 12px;
+}
+
+.popup-section-label i {
+    color: var(--accent-color);
+    font-size: 14px;
+}
+
+.required-star {
+    color: red;
+    font-size: 16px;
+    line-height: 1;
+}
+
+/* Size Buttons */
+.size-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.size-buttons button {
+    width: 50px;
+    height: 50px;
+    border: 2px solid var(--border-color);
+    background: var(--card-bg);
+    color: var(--text-color);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 4px;
+}
+
+.size-buttons button:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.size-buttons button.active {
+    background: var(--accent-color);
+    color: #000;
+    border-color: var(--accent-color);
+}
+
+/* Quantity Box */
+.qty-box {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 2px solid var(--border-color);
+    display: inline-flex;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.qty-box button {
+    width: 44px;
+    height: 44px;
+    border: none;
+    background: var(--light-gray);
+    color: var(--text-color);
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qty-box button:hover {
+    background: var(--accent-color);
+    color: #000;
+}
+
+.qty-box span {
+    font-size: 18px;
+    font-weight: 700;
+    width: 50px;
+    text-align: center;
+    border-left: 2px solid var(--border-color);
+    border-right: 2px solid var(--border-color);
+    padding: 10px 0;
+}
+
+/* Popup Line Total */
+.popup-line-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--light-gray);
+    padding: 12px 16px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    font-size: 15px;
+    font-weight: 600;
+    border-left: 3px solid var(--accent-color);
+}
+
+.popup-line-total span:last-child {
+    color: var(--accent-color);
+    font-size: 18px;
+    font-weight: 800;
+}
+
+/* Popup Buttons */
+.confirm-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    background: var(--accent-color);
+    color: #000;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.confirm-btn:hover {
+    background: #bfa030;
+    transform: translateY(-1px);
+}
+
+.buy-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    background: #111;
+    color: white;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.buy-btn:hover {
+    background: var(--accent-color);
+    color: #000;
+}
+
+.close-popup {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-size: 26px;
+    cursor: pointer;
+    color: var(--text-color);
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.close-popup:hover { opacity: 1; }
+
+/* Shake animation for size error */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+}
+
+/* ========================================
+   ENHANCED CART SIDEBAR
+   ======================================== */
+
+.sidebar-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sidebar-header h3 i {
+    color: var(--accent-color);
+}
+
+.cart-item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border-color);
+    gap: 10px;
+}
+
+.cart-item-info {
+    flex: 1;
+}
+
+.cart-item-name {
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 6px;
+    text-transform: capitalize;
+}
+
+.cart-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+}
+
+.cart-size-badge {
+    background: var(--light-gray);
+    color: var(--text-color);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.cart-price-tag {
+    font-size: 12px;
+    color: #888;
+}
+
+.cart-qty-controls {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 1px solid var(--border-color);
+    display: inline-flex;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.cart-qty-controls button {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: var(--light-gray);
+    color: var(--text-color);
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-qty-controls button:hover {
+    background: var(--accent-color);
+    color: #000;
+}
+
+.cart-qty-controls span {
+    font-size: 14px;
+    font-weight: 700;
+    width: 34px;
+    text-align: center;
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    padding: 6px 0;
+}
+
+.cart-item-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+.cart-item-total {
+    font-weight: 800;
+    font-size: 15px;
+    color: var(--accent-color);
+    white-space: nowrap;
+}
+
+.cart-remove-btn {
+    color: #cc3333;
+    cursor: pointer;
+    font-size: 14px;
+    transition: transform 0.2s;
+}
+
+.cart-remove-btn:hover { transform: scale(1.2); }
+
+.total-price {
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.total-price span {
+    color: var(--accent-color);
+    font-size: 18px;
+}
+
+.free-ship-note {
+    font-size: 12px;
+    color: #25D366;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ========================================
+   ENHANCED CHECKOUT ORDER SUMMARY
+   ======================================== */
+
+.checkout-order-summary {
+    background: var(--light-gray);
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.order-summary-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.order-summary-header i {
+    color: var(--accent-color);
+    font-size: 16px;
+}
+
+.order-summary-header h4 {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    flex: 1;
+    color: var(--text-color) !important;
+}
+
+.item-count {
+    background: var(--accent-color);
+    color: #000;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 12px;
+}
+
+.order-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.order-item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--border-color);
+    gap: 10px;
+}
+
+.order-item-row:last-child {
+    border-bottom: none;
+}
+
+.order-item-details {
+    flex: 1;
+}
+
+.order-item-name {
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.order-item-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.order-size-tag,
+.order-qty-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 12px;
+}
+
+.order-size-tag i, .order-qty-tag i {
+    color: var(--accent-color);
+    font-size: 10px;
+}
+
+.order-unit-price {
+    font-size: 11px;
+    color: #888;
+}
+
+.order-item-amount {
+    font-weight: 800;
+    font-size: 15px;
+    color: var(--accent-color);
+    white-space: nowrap;
+    padding-top: 2px;
+}
+
+/* Price Breakdown */
+.order-price-breakdown {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 2px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+}
+
+.price-row i {
+    color: var(--accent-color);
+    margin-right: 6px;
+}
+
+.free-delivery {
+    color: #25D366;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.grand-total-row {
+    margin-top: 6px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-color);
+    font-weight: 800;
+    font-size: 16px;
+}
+
+.grand-total-row span:last-child {
+    color: var(--accent-color);
+    font-size: 18px;
+}
+
+/* Checkout Form Improvements */
+.checkout-form h4 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: gray;
+    margin-bottom: 5px;
+}
+
+.checkout-form h4 i {
+    color: var(--accent-color);
+}
+
+.place-order-btn {
+    font-size: 15px;
+    padding: 15px;
+    letter-spacing: 1px;
+}
+
+.checkout-note {
+    text-align: center;
+    font-size: 12px;
+    color: #888;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.checkout-note i {
+    color: var(--accent-color);
+}
+
+/* ========================================
+   TOAST NOTIFICATION
+   ======================================== */
+
+.nf-toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #111;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 9999;
+    border-left: 3px solid var(--accent-color);
+    white-space: nowrap;
+    max-width: 90vw;
+}
+
+.nf-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.nf-toast.error {
+    border-left-color: red;
+}
+
+/* ========================================
+   MOBILE RESPONSIVE
+   ======================================== */
+
+@media (max-width: 500px) {
+    .size-popup .popup-box {
+        padding: 30px 20px 20px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    #popupProductName { font-size: 18px; }
+    #popupProductPrice { font-size: 18px; }
+
+    .size-buttons button {
+        width: 44px;
+        height: 44px;
+        font-size: 13px;
+    }
+}
