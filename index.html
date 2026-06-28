@@ -11,7 +11,7 @@
 <body>
 
     <div class="announcement-bar">
-        <p>Free Delivery Across India | Shop the Luxury Collection Now</p>
+        <p>🚚 Free Delivery Across India &nbsp;|&nbsp; Shop the Luxury Collection Now</p>
     </div>
 
     <header class="main-header">
@@ -41,7 +41,7 @@
                     <i class="fas fa-shopping-bag" id="cartBtn"></i>
                     <span class="badge" id="cartCount">0</span>
                 </div>
-                <i class="fas fa-bars" id="menuBtn" class="menu-icon"></i>
+                <i class="fas fa-bars" id="menuBtn"></i>
             </div>
         </div>
     </header>
@@ -53,61 +53,64 @@
         </div>
     </div>
 
-<div id="sizePopup" class="size-popup">
+    <!-- ========== SIZE & QTY POPUP ========== -->
+    <div id="sizePopup" class="size-popup">
+        <div class="popup-box">
+            <span class="close-popup" onclick="closeSizePopup()">&times;</span>
 
-    <div class="popup-box">
+            <div class="popup-product-header">
+                <h2 id="popupProductName">Product Name</h2>
+                <h3 id="popupProductPrice">₹0</h3>
+            </div>
 
-        <span class="close-popup" onclick="closeSizePopup()">&times;</span>
+            <p id="popupDescription" class="popup-desc">Premium Quality Product</p>
 
-        <h2 id="popupProductName">Product Name</h2>
+            <!-- Size Selection -->
+            <div class="popup-section">
+                <div class="popup-section-label">
+                    <i class="fas fa-ruler-horizontal"></i>
+                    <span>Select Size</span>
+                    <span class="required-star">*</span>
+                </div>
+                <div class="size-buttons">
+                    <button onclick="selectSize(this,'S')">S</button>
+                    <button onclick="selectSize(this,'M')">M</button>
+                    <button onclick="selectSize(this,'L')">L</button>
+                    <button onclick="selectSize(this,'XL')">XL</button>
+                    <button onclick="selectSize(this,'XXL')">XXL</button>
+                </div>
+                <p class="size-error-msg" style="display:none; color:red; font-size:12px; margin-top:6px;">
+                    ⚠ Please select a size to continue
+                </p>
+            </div>
 
-        <h3 id="popupProductPrice">₹0</h3>
+            <!-- Quantity Selection -->
+            <div class="popup-section">
+                <div class="popup-section-label">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Quantity</span>
+                </div>
+                <div class="qty-box">
+                    <button onclick="decreaseQty()">−</button>
+                    <span id="qtyValue">1</span>
+                    <button onclick="increaseQty()">+</button>
+                </div>
+            </div>
 
-<p id="popupDescription" class="popup-desc">
-    Premium Quality Product
-</p>
-        
-        <h4>Select Size</h4>
+            <!-- Line Total -->
+            <div class="popup-line-total">
+                <span>Total:</span>
+                <span id="popupLineTotal">₹0</span>
+            </div>
 
-        <div class="size-buttons">
-
-            <button onclick="selectSize(this,'S')">S</button>
-            <button onclick="selectSize(this,'M')">M</button>
-            <button onclick="selectSize(this,'L')">L</button>
-            <button onclick="selectSize(this,'XL')">XL</button>
-            <button onclick="selectSize(this,'XXL')">XXL</button>
-
+            <!-- Single Dynamic Button (Add to Cart OR Buy Now) -->
+            <button class="confirm-btn" id="confirmActionBtn" onclick="confirmAddToCart()">
+                <i class="fas fa-shopping-cart"></i> Add To Cart
+            </button>
         </div>
-
-        <h4>Quantity</h4>
-
-        <div class="qty-box">
-
-            <button onclick="decreaseQty()">−</button>
-
-            <span id="qtyValue">1</span>
-
-            <button onclick="increaseQty()">+</button>
-
-        </div>
-
-        <button class="confirm-btn"
-            onclick="confirmAddToCart()">
-            <i class="fas fa-shopping-cart"></i>
-            Add To Cart
-        </button>
-
-        <button class="buy-btn"
-            onclick="confirmBuyNow()">
-            <i class="fas fa-bolt"></i>
-            Buy Now
-        </button>
-
     </div>
 
-</div>
-    
-    <!-- Checkout Modal -->
+    <!-- ========== CHECKOUT MODAL ========== -->
     <div class="checkout-overlay" id="checkoutOverlay">
         <div class="checkout-modal">
             <div class="checkout-header">
@@ -116,19 +119,20 @@
             </div>
             <div class="checkout-order-summary" id="checkoutSummary"></div>
             <div class="checkout-form">
-                <h4>Delivery Details</h4>
-                <input type="text" id="co-name" placeholder="Full Name *" required>
-                <input type="tel" id="co-mobile" placeholder="Mobile Number *" maxlength="10" required>
-                <textarea id="co-address" placeholder="Full Address *" rows="3" required></textarea>
-                <input type="text" id="co-pincode" placeholder="Pin Code *" maxlength="6" required>
-                <button class="btn btn-gold btn-block" id="placeOrderBtn" onclick="placeOrder()">
+                <h4><i class="fas fa-map-marker-alt"></i> Delivery Details</h4>
+                <input type="text" id="co-name" data-placeholder="Full Name *" placeholder="Full Name *" required>
+                <input type="tel" id="co-mobile" data-placeholder="Mobile Number *" placeholder="Mobile Number *" maxlength="10" required>
+                <textarea id="co-address" data-placeholder="Full Address (House No, Street, Area) *" placeholder="Full Address (House No, Street, Area) *" rows="3" required></textarea>
+                <input type="text" id="co-pincode" data-placeholder="Pin Code *" placeholder="Pin Code *" maxlength="6" required>
+                <button class="btn btn-gold btn-block place-order-btn" id="placeOrderBtn" onclick="placeOrder()">
                     <i class="fas fa-check-circle"></i> Place Order
                 </button>
+                <p class="checkout-note"><i class="fas fa-lock"></i> 100% Secure. We'll contact you to confirm your order.</p>
             </div>
         </div>
     </div>
 
-    <!-- Success Modal -->
+    <!-- ========== SUCCESS MODAL ========== -->
     <div class="success-overlay" id="successOverlay">
         <div class="success-modal">
             <div class="success-icon"><i class="fas fa-check-circle"></i></div>
@@ -138,17 +142,19 @@
         </div>
     </div>
 
+    <!-- ========== CART SIDEBAR ========== -->
     <div class="sidebar" id="cartSidebar">
         <div class="sidebar-header">
-            <h3>Your Bag</h3>
+            <h3><i class="fas fa-shopping-bag"></i> Your Bag</h3>
             <i class="fas fa-times" id="closeCart"></i>
         </div>
         <div class="sidebar-content" id="cartItems">
             <p class="empty-msg">Your shopping bag is empty.</p>
         </div>
         <div class="sidebar-footer">
-            <div class="total-price">Total: <span>₹0</span></div>
-            <button class="btn btn-gold btn-block" onclick="openCheckout()">Checkout Now</button>
+            <div class="total-price">Grand Total: <span>₹0</span></div>
+            <p class="free-ship-note"><i class="fas fa-truck"></i> Free Delivery Included</p>
+            <button class="btn btn-gold btn-block" onclick="openCheckout()">Proceed to Checkout</button>
         </div>
     </div>
 
@@ -176,15 +182,15 @@
                 <h3>Polo T-Shirts</h3>
             </div>
             <div class="category-card" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('https://res.cloudinary.com/dn3waiq5c/image/upload/f_auto,q_auto/Denim_Jeans_ax3knb');">
-                <h3> Premium Denim Jeans</h3>
+                <h3>Denim Jeans</h3>
             </div>
             <div class="category-card" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('https://res.cloudinary.com/dn3waiq5c/image/upload/f_auto,q_auto/Striped_Shirt_a8zpf6');">
-                <h3>Striped Shirt</h3>
+                <h3>Premium Shirts</h3>
             </div>
         </div>
     </section>
 
-    <section class="products" id="shop">
+    <section class="shop" id="shop">
         <div class="section-title">
             <h2>Featured Products</h2>
             <p>Experience true craftsmanship and premium fabrics</p>
@@ -203,8 +209,8 @@
                         <span class="orig-price">₹1000</span>
                     </div>
                     <div class="prod-btns">
-                        <button class="btn btn-sm btn-dark" onclick="addToCart('Premium Polo T-Shirt', 800)">Add to Cart</button>
-                        <button class="btn btn-sm btn-gold"onclick="openBuyNow('Premium Polo T-Shirt',800)">Buy Now</button>
+                        <button class="btn btn-sm btn-dark" onclick="addToCart('Premium Polo T-Shirt', 800, 1000)">Add to Cart</button>
+                        <button class="btn btn-sm btn-gold" onclick="openBuyNow('Premium Polo T-Shirt', 800, 1000)">Buy Now</button>
                     </div>
                 </div>
             </div>
@@ -221,8 +227,8 @@
                         <span class="orig-price">₹1300</span>
                     </div>
                     <div class="prod-btns">
-                        <button class="btn btn-sm btn-dark" onclick="addToCart('Premium Linen Pants', 1105)">Add to Cart</button>
-                        <button class="btn btn-sm btn-gold" onclick="openBuyNow('Premium Linen Pants', 1105)">Buy Now</button>
+                        <button class="btn btn-sm btn-dark" onclick="addToCart('Premium Linen Pants', 1105, 1300)">Add to Cart</button>
+                        <button class="btn btn-sm btn-gold" onclick="openBuyNow('Premium Linen Pants', 1105, 1300)">Buy Now</button>
                     </div>
                 </div>
             </div>
@@ -239,15 +245,15 @@
                         <span class="orig-price">₹1600</span>
                     </div>
                     <div class="prod-btns">
-                        <button class="btn btn-sm btn-dark" onclick="addToCart('Premium Denim Jeans', 1300)">Add to Cart</button>
-                        <button class="btn btn-sm btn-gold" onclick="openBuyNow('Premium Denim Jeans', 1300)">Buy Now</button>
+                        <button class="btn btn-sm btn-dark" onclick="addToCart('Premium Denim Jeans', 1300, 1600)">Add to Cart</button>
+                        <button class="btn btn-sm btn-gold" onclick="openBuyNow('Premium Denim Jeans', 1300, 1600)">Buy Now</button>
                     </div>
                 </div>
             </div>
             <div class="product-card">
                 <div class="badge-discount">-16%</div>
                 <div class="img-container">
-                    <img src="https://res.cloudinary.com/dn3waiq5c/image/upload/f_auto,q_auto/Striped_Shirt_a8zpf6" alt=" Premium Striped Shirt">
+                    <img src="https://res.cloudinary.com/dn3waiq5c/image/upload/f_auto,q_auto/Striped_Shirt_a8zpf6" alt="Premium Striped Shirt">
                     <i class="far fa-heart wishlist-icon-btn" onclick="toggleWishlist(this)"></i>
                 </div>
                 <div class="product-info">
@@ -257,8 +263,8 @@
                         <span class="orig-price">₹1200</span>
                     </div>
                     <div class="prod-btns">
-                        <button class="btn btn-sm btn-dark" onclick="addToCart('Striped Shirt', 999)">Add to Cart</button>
-                        <button class="btn btn-sm btn-gold" onclick="openBuyNow('Striped Shirt', 999)">Buy Now</button>
+                        <button class="btn btn-sm btn-dark" onclick="addToCart('Striped Shirt', 999, 1200)">Add to Cart</button>
+                        <button class="btn btn-sm btn-gold" onclick="openBuyNow('Striped Shirt', 999, 1200)">Buy Now</button>
                     </div>
                 </div>
             </div>
