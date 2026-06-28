@@ -49,21 +49,67 @@ let selectedProduct = "";
 let selectedPrice = 0;
 let selectedSize = "";
 
-function addToCart(pName, pPrice) {
+let selectedQty = 1;
+let isBuyNow = false;
+
+function addToCart(pName, pPrice){
+
+    isBuyNow = false;
 
     selectedProduct = pName;
     selectedPrice = pPrice;
 
+    selectedQty = 1;
+    selectedSize = "";
+
+    document.getElementById("popupProductName").innerText = pName;
+    document.getElementById("popupProductPrice").innerText = "₹" + pPrice;
+
+    document.getElementById("qtyValue").innerText = "1";
+
+    document.querySelectorAll(".size-buttons button").forEach(btn=>{
+        btn.classList.remove("active");
+    });
+
     document.getElementById("sizePopup").style.display = "flex";
 
 }
-function selectSize(size){
+
+function openBuyNow(pName, pPrice){
+
+    isBuyNow = true;
+
+    selectedProduct = pName;
+    selectedPrice = pPrice;
+
+    selectedQty = 1;
+    selectedSize = "";
+
+    document.getElementById("popupProductName").innerText = pName;
+    document.getElementById("popupProductPrice").innerText = "₹" + pPrice;
+
+    document.getElementById("qtyValue").innerText = "1";
+
+    document.querySelectorAll(".size-buttons button").forEach(btn=>{
+        btn.classList.remove("active");
+    });
+
+    document.getElementById("sizePopup").style.display = "flex";
+
+}
+
+function selectSize(button, size){
 
     selectedSize = size;
 
-    alert("Selected Size : " + size);
+    document.querySelectorAll(".size-buttons button").forEach(btn=>{
+        btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
 
 }
+
 function confirmAddToCart(){
 
     if(selectedSize==""){
@@ -74,11 +120,12 @@ function confirmAddToCart(){
     cartCount++;
     document.getElementById("cartCount").innerText = cartCount;
 
-    cartItems.push({
-        name: selectedProduct,
-        price: selectedPrice,
-        size: selectedSize
-    });
+cartItems.push({
+    name: selectedProduct,
+    price: selectedPrice,
+    size: selectedSize,
+    qty: selectedQty
+});
 
     const cartItemsEl = document.getElementById('cartItems');
 
@@ -102,10 +149,10 @@ function confirmAddToCart(){
                 Size : ${selectedSize}
             </p>
 
-            <p style="color:var(--accent-color);">
-                ₹${selectedPrice}
-            </p>
-        </div>
+            <p style="font-size:13px;color:gray;">
+               Qty : ${selectedQty}
+                </p>
+                    </div>
 
         <i class="fas fa-trash-alt"
         style="cursor:pointer;color:red;"
@@ -114,7 +161,7 @@ function confirmAddToCart(){
 
     cartItemsEl.appendChild(itemRow);
 
-    updateTotal(selectedPrice);
+    updateTotal(selectedPrice * selectedQty);
 
     cartSidebar.classList.add('active');
 
@@ -122,6 +169,83 @@ function confirmAddToCart(){
 
     selectedSize="";
 }
+
+// ---------- Quantity ----------
+
+function increaseQty(){
+
+    selectedQty++;
+
+    document.getElementById("qtyValue").innerText = selectedQty;
+
+}
+
+function decreaseQty(){
+
+    if(selectedQty > 1){
+
+        selectedQty--;
+
+        document.getElementById("qtyValue").innerText = selectedQty;
+
+    }
+
+}
+
+// ---------- Close Popup ----------
+
+function closeSizePopup(){
+
+    document.getElementById("sizePopup").style.display = "none";
+
+    selectedQty = 1;
+    selectedSize = "";
+
+    document.getElementById("qtyValue").innerText = 1;
+
+    document.querySelectorAll(".size-buttons button").forEach(btn=>{
+        btn.classList.remove("active");
+    });
+
+function confirmBuyNow(){
+
+    if(selectedSize==""){
+
+        alert("Please Select Size");
+
+        return;
+
+    }
+
+    cartItems = [];
+
+    cartCount = 1;
+
+    document.getElementById("cartCount").innerText = 1;
+
+    cartItems.push({
+
+        name:selectedProduct,
+
+        price:selectedPrice,
+
+        size:selectedSize,
+
+        qty:selectedQty
+
+    });
+
+    document.querySelector(".total-price span").innerText =
+    "₹" + (selectedPrice * selectedQty);
+
+    document.getElementById("sizePopup").style.display = "none";
+
+    openCheckout();
+
+}
+       
+}
+
 
 // --- Remove from Cart ---
 function removeItem(element, price, index) {
