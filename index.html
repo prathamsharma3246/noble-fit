@@ -52,23 +52,31 @@
             <i class="fas fa-times" id="closeSearch"></i>
         </div>
     </div>
+    
 <div id="sizePopup" class="size-popup">
 
-<h3>Select Size</h3>
+    <div class="popup-box">
 
-<button onclick="selectSize('S')">S</button>
+        <h3>Select Size</h3>
 
-<button onclick="selectSize('M')">M</button>
+        <div class="size-buttons">
 
-<button onclick="selectSize('L')">L</button>
+            <button onclick="selectSize('S')">S</button>
+            <button onclick="selectSize('M')">M</button>
+            <button onclick="selectSize('L')">L</button>
+            <button onclick="selectSize('XL')">XL</button>
+            <button onclick="selectSize('XXL')">XXL</button>
 
-<button onclick="selectSize('XL')">XL</button>
+        </div>
 
-<button onclick="selectSize('XXL')">XXL</button>
-    
-<button onclick="confirmAddToCart()">Add To Cart</button>
-    
+        <button class="confirm-btn" onclick="confirmAddToCart()">
+            Add To Cart
+        </button>
+
+    </div>
+
 </div>
+    
     <!-- Checkout Modal -->
     <div class="checkout-overlay" id="checkoutOverlay">
         <div class="checkout-modal">
