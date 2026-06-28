@@ -52,25 +52,49 @@
             <i class="fas fa-times" id="closeSearch"></i>
         </div>
     </div>
-    
-<div id="sizePopup" class="size-popup">
+
+    <div id="sizePopup" class="size-popup">
 
     <div class="popup-box">
 
-        <h3>Select Size</h3>
+        <span class="close-popup" onclick="closeSizePopup()">&times;</span>
+
+        <h2 id="popupProductName">Product Name</h2>
+
+        <h3 id="popupProductPrice">₹0</h3>
+
+        <p id="popupDescription">Premium Quality Product</p>
+
+        <h4>Select Size</h4>
 
         <div class="size-buttons">
 
-            <button onclick="selectSize('S')">S</button>
-            <button onclick="selectSize('M')">M</button>
-            <button onclick="selectSize('L')">L</button>
-            <button onclick="selectSize('XL')">XL</button>
-            <button onclick="selectSize('XXL')">XXL</button>
+            <button onclick="selectSize(this,'S')">S</button>
+            <button onclick="selectSize(this,'M')">M</button>
+            <button onclick="selectSize(this,'L')">L</button>
+            <button onclick="selectSize(this,'XL')">XL</button>
+            <button onclick="selectSize(this,'XXL')">XXL</button>
+
+        </div>
+
+        <h4>Quantity</h4>
+
+        <div class="quantity-box">
+
+            <button onclick="decreaseQty()">-</button>
+
+            <span id="qtyValue">1</span>
+
+            <button onclick="increaseQty()">+</button>
 
         </div>
 
         <button class="confirm-btn" onclick="confirmAddToCart()">
             Add To Cart
+        </button>
+
+        <button class="buy-btn" onclick="confirmBuyNow()">
+            Buy Now
         </button>
 
     </div>
@@ -174,7 +198,7 @@
                     </div>
                     <div class="prod-btns">
                         <button class="btn btn-sm btn-dark" onclick="addToCart('Premium Polo T-Shirt', 800)">Add to Cart</button>
-                        <button class="btn btn-sm btn-gold" onclick="buyNow('Premium Polo T-Shirt', 800)">Buy Now</button>
+                        <button class="btn btn-sm btn-gold"onclick="openBuyNow('Premium Polo T-Shirt',800)">Buy Now</button>
                     </div>
                 </div>
             </div>
@@ -192,7 +216,7 @@
                     </div>
                     <div class="prod-btns">
                         <button class="btn btn-sm btn-dark" onclick="addToCart('Premium Linen Pants', 1105)">Add to Cart</button>
-                        <button class="btn btn-sm btn-gold" onclick="buyNow('Premium Linen Pants', 1105)">Buy Now</button>
+                        <button class="btn btn-sm btn-gold" onclick="openBuyNow('Premium Linen Pants', 1105)">Buy Now</button>
                     </div>
                 </div>
             </div>
@@ -210,7 +234,7 @@
                     </div>
                     <div class="prod-btns">
                         <button class="btn btn-sm btn-dark" onclick="addToCart('Premium Denim Jeans', 1300)">Add to Cart</button>
-                        <button class="btn btn-sm btn-gold" onclick="buyNow('Premium Denim Jeans', 1300)">Buy Now</button>
+                        <button class="btn btn-sm btn-gold" onclick="openBuyNow('Premium Denim Jeans', 1300)">Buy Now</button>
                     </div>
                 </div>
             </div>
@@ -228,7 +252,7 @@
                     </div>
                     <div class="prod-btns">
                         <button class="btn btn-sm btn-dark" onclick="addToCart('Designer Casual Shirt', 999)">Add to Cart</button>
-                        <button class="btn btn-sm btn-gold" onclick="buyNow('Designer Casual Shirt', 999)">Buy Now</button>
+                        <button class="btn btn-sm btn-gold" onclick="openBuyNow('Designer Casual Shirt', 999)">Buy Now</button>
                     </div>
                 </div>
             </div>
