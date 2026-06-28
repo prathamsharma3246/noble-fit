@@ -165,9 +165,7 @@ cartItems.push({
 
     cartSidebar.classList.add('active');
 
-    document.getElementById("sizePopup").style.display="none";
-
-    selectedSize="";
+    closeSizePopup();
 }
 
 // ---------- Quantity ----------
@@ -207,6 +205,8 @@ function closeSizePopup(){
         btn.classList.remove("active");
     });
 
+}
+
 function confirmBuyNow(){
 
     if(selectedSize==""){
@@ -217,6 +217,7 @@ function confirmBuyNow(){
 
     }
 
+    
     cartItems = [];
 
     cartCount = 1;
@@ -243,8 +244,6 @@ function confirmBuyNow(){
     openCheckout();
 
 }
-       
-}
 
 
 // --- Remove from Cart ---
@@ -268,14 +267,6 @@ function updateTotal(price) {
     totalSpan.innerText = '₹' + (currentTotal + price);
 }
 
-// --- Buy Now (direct checkout) ---
-function buyNow(pName, pPrice) {
-    cartItems = [{ name: pName, price: pPrice }];
-    cartCount = 1;
-    document.getElementById('cartCount').innerText = 1;
-    document.querySelector('.total-price span').innerText = '₹' + pPrice;
-    openCheckout();
-}
 
 // --- Open Checkout Modal ---
 function openCheckout() {
@@ -288,9 +279,22 @@ function openCheckout() {
     const total = totalSpan.innerText;
 
     let summaryHTML = '<h4>Order Summary</h4>';
+
     cartItems.forEach(item => {
-        summaryHTML += `<div class="summary-item"><span>${item.name}</span><span>₹${item.price}</span></div>`;
-    });
+    summaryHTML += `
+        <div class="summary-item">
+            <div>
+                <strong>${item.name}</strong><br>
+                Size: ${item.size}<br>
+                Qty: ${item.qty}
+            </div>
+
+            <div>
+                ₹${item.price * item.qty}
+            </div>
+        </div>`;
+});
+    
     summaryHTML += `<div class="summary-total"><span>Total Amount</span><span>${total}</span></div>`;
     document.getElementById('checkoutSummary').innerHTML = summaryHTML;
 
@@ -314,7 +318,13 @@ async function placeOrder() {
     if (!address) { alert('Kripya apna address darj karein.'); return; }
     if (!pincode || pincode.length !== 6 || isNaN(pincode)) { alert('Kripya 6 digit ka valid pin code darj karein.'); return; }
 
-    const orderDetails = cartItems.map(i => i.name + ' (₹' + i.price + ')').join(', ');
+const orderDetails = cartItems.map(i =>
+`${i.name}
+Size: ${i.size}
+Qty: ${i.qty}
+Price: ₹${i.price * i.qty}`
+).join(", ");
+    
     const totalAmount = document.querySelector('.total-price span').innerText;
 
     const btn = document.getElementById('placeOrderBtn');
