@@ -14,9 +14,8 @@ const backToTop = document.getElementById('backToTop');
 const SHEET_URL = 'https://script.google.com/macros/s/AKfycbyWtv_B8KL9ao9B-JHNMsKhwQDUQCYT-vWocvYUfKpgZg0HUmIpd3Il09NZitmqDAfCTA/exec';
 
 // --- State ---
-let cartCount = 0;
-let wishlistCount = 0;
 let cartItems = [];
+let wishlistCount = 0;
 
 // --- Dark Mode Toggle ---
 themeBtn.addEventListener('click', () => {
@@ -44,259 +43,256 @@ closeSearch.addEventListener('click', () => searchOverlay.style.display = 'none'
 cartBtn.addEventListener('click', () => cartSidebar.classList.add('active'));
 closeCart.addEventListener('click', () => cartSidebar.classList.remove('active'));
 
-// ---------- Size Popup ----------
+// ========== SIZE POPUP ==========
 let selectedProduct = "";
 let selectedPrice = 0;
+let selectedOrigPrice = 0;
 let selectedSize = "";
-
 let selectedQty = 1;
 let isBuyNow = false;
 
-function addToCart(pName, pPrice){
-
+function addToCart(pName, pPrice, pOrigPrice) {
     isBuyNow = false;
-
-    selectedProduct = pName;
-    selectedPrice = pPrice;
-
-    selectedQty = 1;
-    selectedSize = "";
-
-    document.getElementById("popupProductName").innerText = pName;
-    document.getElementById("popupProductPrice").innerText = "₹" + pPrice;
-
-    document.getElementById("qtyValue").innerText = "1";
-
-    document.querySelectorAll(".size-buttons button").forEach(btn=>{
-        btn.classList.remove("active");
-    });
-
-    document.getElementById("sizePopup").style.display = "flex";
-
+    openSizePopup(pName, pPrice, pOrigPrice || pPrice);
 }
 
-function openBuyNow(pName, pPrice){
-
+function openBuyNow(pName, pPrice, pOrigPrice) {
     isBuyNow = true;
+    openSizePopup(pName, pPrice, pOrigPrice || pPrice);
+}
 
+function openSizePopup(pName, pPrice, pOrigPrice) {
     selectedProduct = pName;
     selectedPrice = pPrice;
-
+    selectedOrigPrice = pOrigPrice;
     selectedQty = 1;
     selectedSize = "";
 
     document.getElementById("popupProductName").innerText = pName;
-    document.getElementById("popupProductPrice").innerText = "₹" + pPrice;
-
+    document.getElementById("popupProductPrice").innerHTML = 
+        `₹${pPrice} <span class="popup-orig-price">₹${pOrigPrice}</span>`;
     document.getElementById("qtyValue").innerText = "1";
+    document.getElementById("popupLineTotal").innerText = "₹" + pPrice;
 
-    document.querySelectorAll(".size-buttons button").forEach(btn=>{
+    document.querySelectorAll(".size-buttons button").forEach(btn => {
         btn.classList.remove("active");
     });
+
+    // Update button text based on action
+    const confirmBtn = document.getElementById("confirmActionBtn");
+    if (isBuyNow) {
+        confirmBtn.innerHTML = '<i class="fas fa-bolt"></i> Buy Now';
+        confirmBtn.className = 'buy-btn';
+        confirmBtn.onclick = confirmBuyNow;
+    } else {
+        confirmBtn.innerHTML = '<i class="fas fa-shopping-cart"></i> Add To Cart';
+        confirmBtn.className = 'confirm-btn';
+        confirmBtn.onclick = confirmAddToCart;
+    }
 
     document.getElementById("sizePopup").style.display = "flex";
-
 }
 
-function selectSize(button, size){
-
+function selectSize(button, size) {
     selectedSize = size;
-
-    document.querySelectorAll(".size-buttons button").forEach(btn=>{
+    document.querySelectorAll(".size-buttons button").forEach(btn => {
         btn.classList.remove("active");
     });
-
     button.classList.add("active");
-
 }
 
-function confirmAddToCart(){
+function increaseQty() {
+    selectedQty++;
+    document.getElementById("qtyValue").innerText = selectedQty;
+    updatePopupTotal();
+}
 
-    if(selectedSize==""){
-        alert("Please Select Size");
+function decreaseQty() {
+    if (selectedQty > 1) {
+        selectedQty--;
+        document.getElementById("qtyValue").innerText = selectedQty;
+        updatePopupTotal();
+    }
+}
+
+function updatePopupTotal() {
+    document.getElementById("popupLineTotal").innerText = "₹" + (selectedPrice * selectedQty).toLocaleString('en-IN');
+}
+
+function closeSizePopup() {
+    document.getElementById("sizePopup").style.display = "none";
+    selectedQty = 1;
+    selectedSize = "";
+}
+
+function confirmAddToCart() {
+    if (selectedSize === "") {
+        showSizeError();
         return;
     }
 
-    cartCount++;
-    document.getElementById("cartCount").innerText = cartCount;
-
-cartItems.push({
-    name: selectedProduct,
-    price: selectedPrice,
-    size: selectedSize,
-    qty: selectedQty
-});
-
-    const cartItemsEl = document.getElementById('cartItems');
-
-    const emptyMsg = cartItemsEl.querySelector('.empty-msg');
-    if(emptyMsg){
-        emptyMsg.remove();
+    // Check if same product+size already in cart
+    const existingIndex = cartItems.findIndex(i => i.name === selectedProduct && i.size === selectedSize);
+    if (existingIndex > -1) {
+        cartItems[existingIndex].qty += selectedQty;
+    } else {
+        cartItems.push({
+            name: selectedProduct,
+            price: selectedPrice,
+            size: selectedSize,
+            qty: selectedQty,
+            id: Date.now()
+        });
     }
 
-    const itemIndex = cartItems.length - 1;
-
-    const itemRow = document.createElement('div');
-
-    itemRow.style.cssText =
-    'display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;border-bottom:1px solid var(--border-color);padding-bottom:10px;';
-
-    itemRow.innerHTML = `
-        <div>
-            <p style="font-weight:600;">${selectedProduct}</p>
-
-            <p style="font-size:13px;color:gray;">
-                Size : ${selectedSize}
-            </p>
-
-            <p style="font-size:13px;color:gray;">
-               Qty : ${selectedQty}
-                </p>
-                    </div>
-
-        <i class="fas fa-trash-alt"
-        style="cursor:pointer;color:red;"
-        onclick="removeItem(this, ${selectedPrice}, ${itemIndex})"></i>
-    `;
-
-    cartItemsEl.appendChild(itemRow);
-
-    updateTotal(selectedPrice * selectedQty);
-
+    updateCartUI();
+    closeSizePopup();
     cartSidebar.classList.add('active');
+    showToast(`${selectedProduct} added to bag!`);
+}
+
+function confirmBuyNow() {
+    if (selectedSize === "") {
+        showSizeError();
+        return;
+    }
+
+    // Buy now: only this product
+    const buyItems = [{
+        name: selectedProduct,
+        price: selectedPrice,
+        size: selectedSize,
+        qty: selectedQty,
+        id: Date.now()
+    }];
 
     closeSizePopup();
+    openCheckoutWithItems(buyItems);
 }
 
-// ---------- Quantity ----------
-
-function increaseQty(){
-
-    selectedQty++;
-
-    document.getElementById("qtyValue").innerText = selectedQty;
-
-}
-
-function decreaseQty(){
-
-    if(selectedQty > 1){
-
-        selectedQty--;
-
-        document.getElementById("qtyValue").innerText = selectedQty;
-
+function showSizeError() {
+    const sizeSection = document.querySelector('.size-error-msg');
+    if (sizeSection) {
+        sizeSection.style.display = 'block';
+        setTimeout(() => sizeSection.style.display = 'none', 2500);
+    } else {
+        // Shake size buttons
+        const sizeBtns = document.querySelector('.size-buttons');
+        sizeBtns.style.animation = 'shake 0.4s ease';
+        setTimeout(() => sizeBtns.style.animation = '', 400);
     }
-
 }
 
-// ---------- Close Popup ----------
-
-function closeSizePopup(){
-
-    document.getElementById("sizePopup").style.display = "none";
-
-    selectedQty = 1;
-    selectedSize = "";
-
-    document.getElementById("qtyValue").innerText = 1;
-
-    document.querySelectorAll(".size-buttons button").forEach(btn=>{
-        btn.classList.remove("active");
-    });
-
-}
-
-function confirmBuyNow(){
-
-    if(selectedSize==""){
-
-        alert("Please Select Size");
-
-        return;
-
-    }
-
-    
-    cartItems = [];
-
-    cartCount = 1;
-
-    document.getElementById("cartCount").innerText = 1;
-
-    cartItems.push({
-
-        name:selectedProduct,
-
-        price:selectedPrice,
-
-        size:selectedSize,
-
-        qty:selectedQty
-
-    });
-
-    document.querySelector(".total-price span").innerText =
-    "₹" + (selectedPrice * selectedQty);
-
-    document.getElementById("sizePopup").style.display = "none";
-
-    openCheckout();
-
-}
-
-
-// --- Remove from Cart ---
-function removeItem(element, price, index) {
-    element.parentElement.remove();
-    cartCount--;
-    document.getElementById('cartCount').innerText = cartCount;
-    cartItems.splice(index, 1);
-    updateTotal(-price);
-
+// ========== CART UI ==========
+function updateCartUI() {
     const cartItemsEl = document.getElementById('cartItems');
-    if (cartItemsEl.children.length === 0) {
-        cartItemsEl.innerHTML = '<p class="empty-msg">Your shopping bag is empty.</p>';
-    }
-}
+    const cartCountEl = document.getElementById('cartCount');
 
-// --- Update Total ---
-function updateTotal(price) {
-    const totalSpan = document.querySelector('.total-price span');
-    let currentTotal = parseInt(totalSpan.innerText.replace('₹', '')) || 0;
-    totalSpan.innerText = '₹' + (currentTotal + price);
-}
+    const totalQty = cartItems.reduce((sum, i) => sum + i.qty, 0);
+    cartCountEl.innerText = totalQty;
 
-
-// --- Open Checkout Modal ---
-function openCheckout() {
     if (cartItems.length === 0) {
-        alert('Aapka cart khali hai! Pehle kuch products add karein.');
+        cartItemsEl.innerHTML = '<p class="empty-msg">Your shopping bag is empty.</p>';
+        document.querySelector('.total-price span').innerText = '₹0';
         return;
     }
 
-    const totalSpan = document.querySelector('.total-price span');
-    const total = totalSpan.innerText;
-
-    let summaryHTML = '<h4>Order Summary</h4>';
-
-    cartItems.forEach(item => {
-    summaryHTML += `
-        <div class="summary-item">
-            <div>
-                <strong>${item.name}</strong><br>
-                Size: ${item.size}<br>
-                Qty: ${item.qty}
+    let html = '';
+    cartItems.forEach((item, index) => {
+        const itemTotal = item.price * item.qty;
+        html += `
+        <div class="cart-item-row" data-id="${item.id}">
+            <div class="cart-item-info">
+                <p class="cart-item-name">${item.name}</p>
+                <div class="cart-item-meta">
+                    <span class="cart-size-badge">Size: ${item.size}</span>
+                    <span class="cart-price-tag">₹${item.price.toLocaleString('en-IN')}</span>
+                </div>
+                <div class="cart-qty-controls">
+                    <button onclick="updateCartQty(${index}, -1)">−</button>
+                    <span>${item.qty}</span>
+                    <button onclick="updateCartQty(${index}, 1)">+</button>
+                </div>
             </div>
-
-            <div>
-                ₹${item.price * item.qty}
+            <div class="cart-item-right">
+                <p class="cart-item-total">₹${itemTotal.toLocaleString('en-IN')}</p>
+                <i class="fas fa-trash-alt cart-remove-btn" onclick="removeItem(${index})"></i>
             </div>
         </div>`;
-});
-    
-    summaryHTML += `<div class="summary-total"><span>Total Amount</span><span>${total}</span></div>`;
+    });
+
+    cartItemsEl.innerHTML = html;
+
+    const grandTotal = cartItems.reduce((sum, i) => sum + i.price * i.qty, 0);
+    document.querySelector('.total-price span').innerText = '₹' + grandTotal.toLocaleString('en-IN');
+}
+
+function updateCartQty(index, delta) {
+    cartItems[index].qty += delta;
+    if (cartItems[index].qty < 1) cartItems[index].qty = 1;
+    updateCartUI();
+}
+
+function removeItem(index) {
+    cartItems.splice(index, 1);
+    updateCartUI();
+}
+
+// ========== CHECKOUT ==========
+function openCheckout() {
+    if (cartItems.length === 0) {
+        showToast('Pehle kuch products add karein!', true);
+        return;
+    }
+    openCheckoutWithItems(cartItems);
+}
+
+function openCheckoutWithItems(items) {
+    const grandTotal = items.reduce((sum, i) => sum + i.price * i.qty, 0);
+
+    let summaryHTML = `
+    <div class="order-summary-header">
+        <i class="fas fa-receipt"></i>
+        <h4>Order Summary</h4>
+        <span class="item-count">${items.length} item${items.length > 1 ? 's' : ''}</span>
+    </div>
+    <div class="order-items-list">`;
+
+    items.forEach(item => {
+        const itemTotal = item.price * item.qty;
+        summaryHTML += `
+        <div class="order-item-row">
+            <div class="order-item-details">
+                <p class="order-item-name">${item.name}</p>
+                <div class="order-item-tags">
+                    <span class="order-size-tag"><i class="fas fa-ruler"></i> Size: ${item.size}</span>
+                    <span class="order-qty-tag"><i class="fas fa-layer-group"></i> Qty: ${item.qty}</span>
+                    <span class="order-unit-price">₹${item.price.toLocaleString('en-IN')} each</span>
+                </div>
+            </div>
+            <div class="order-item-amount">₹${itemTotal.toLocaleString('en-IN')}</div>
+        </div>`;
+    });
+
+    summaryHTML += `</div>
+    <div class="order-price-breakdown">
+        <div class="price-row">
+            <span>Subtotal</span>
+            <span>₹${grandTotal.toLocaleString('en-IN')}</span>
+        </div>
+        <div class="price-row delivery-row">
+            <span><i class="fas fa-truck"></i> Delivery</span>
+            <span class="free-delivery">FREE</span>
+        </div>
+        <div class="price-row grand-total-row">
+            <span>Total Amount</span>
+            <span>₹${grandTotal.toLocaleString('en-IN')}</span>
+        </div>
+    </div>`;
+
     document.getElementById('checkoutSummary').innerHTML = summaryHTML;
+    document.getElementById('checkoutOverlay').setAttribute('data-items', JSON.stringify(items));
+    document.getElementById('checkoutOverlay').setAttribute('data-total', grandTotal);
 
     cartSidebar.classList.remove('active');
     document.getElementById('checkoutOverlay').classList.add('active');
@@ -313,19 +309,18 @@ async function placeOrder() {
     const address = document.getElementById('co-address').value.trim();
     const pincode = document.getElementById('co-pincode').value.trim();
 
-    if (!name) { alert('Kripya apna naam darj karein.'); return; }
-    if (!mobile || mobile.length !== 10 || isNaN(mobile)) { alert('Kripya 10 digit ka valid mobile number darj karein.'); return; }
-    if (!address) { alert('Kripya apna address darj karein.'); return; }
-    if (!pincode || pincode.length !== 6 || isNaN(pincode)) { alert('Kripya 6 digit ka valid pin code darj karein.'); return; }
+    if (!name) { showFormError('co-name', 'Naam darj karein'); return; }
+    if (!mobile || mobile.length !== 10 || isNaN(mobile)) { showFormError('co-mobile', '10 digit mobile number darj karein'); return; }
+    if (!address) { showFormError('co-address', 'Address darj karein'); return; }
+    if (!pincode || pincode.length !== 6 || isNaN(pincode)) { showFormError('co-pincode', '6 digit pin code darj karein'); return; }
 
-const orderDetails = cartItems.map(i =>
-`${i.name}
-Size: ${i.size}
-Qty: ${i.qty}
-Price: ₹${i.price * i.qty}`
-).join(", ");
-    
-    const totalAmount = document.querySelector('.total-price span').innerText;
+    const overlay = document.getElementById('checkoutOverlay');
+    const items = JSON.parse(overlay.getAttribute('data-items') || '[]');
+    const totalAmount = '₹' + overlay.getAttribute('data-total');
+
+    const orderDetails = items.map(i =>
+        `${i.name} | Size: ${i.size} | Qty: ${i.qty} | ₹${i.price * i.qty}`
+    ).join(' || ');
 
     const btn = document.getElementById('placeOrderBtn');
     btn.disabled = true;
@@ -342,6 +337,7 @@ Price: ₹${i.price * i.qty}`
         document.getElementById('checkoutOverlay').classList.remove('active');
         document.getElementById('successOverlay').classList.add('active');
         resetCart();
+        resetForm();
 
     } catch (err) {
         alert('Network error. Kripya dobara try karein.');
@@ -350,28 +346,37 @@ Price: ₹${i.price * i.qty}`
     }
 }
 
-// --- Reset Cart ---
+function showFormError(fieldId, msg) {
+    const el = document.getElementById(fieldId);
+    el.focus();
+    el.style.borderColor = 'red';
+    el.placeholder = msg;
+    setTimeout(() => {
+        el.style.borderColor = '';
+        el.placeholder = el.getAttribute('data-placeholder') || '';
+    }, 2500);
+}
+
+// --- Reset ---
 function resetCart() {
     cartItems = [];
-    cartCount = 0;
-    document.getElementById('cartCount').innerText = 0;
-    document.getElementById('cartItems').innerHTML = '<p class="empty-msg">Your shopping bag is empty.</p>';
-    document.querySelector('.total-price span').innerText = '₹0';
-    document.getElementById('co-name').value = '';
-    document.getElementById('co-mobile').value = '';
-    document.getElementById('co-address').value = '';
-    document.getElementById('co-pincode').value = '';
+    updateCartUI();
+}
+
+function resetForm() {
+    ['co-name', 'co-mobile', 'co-address', 'co-pincode'].forEach(id => {
+        document.getElementById(id).value = '';
+    });
     const btn = document.getElementById('placeOrderBtn');
     btn.disabled = false;
     btn.innerHTML = '<i class="fas fa-check-circle"></i> Place Order';
 }
 
-// --- Close Success Modal ---
 function closeSuccess() {
     document.getElementById('successOverlay').classList.remove('active');
 }
 
-// --- Wishlist ---
+// ========== WISHLIST ==========
 function toggleWishlist(element) {
     if (element.classList.contains('far')) {
         element.classList.replace('far', 'fas');
@@ -383,7 +388,22 @@ function toggleWishlist(element) {
     document.getElementById('wishlistCount').innerText = wishlistCount;
 }
 
-// --- Back to Top ---
+// ========== TOAST NOTIFICATION ==========
+function showToast(msg, isError = false) {
+    let toast = document.getElementById('nf-toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'nf-toast';
+        document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    toast.className = 'nf-toast' + (isError ? ' error' : '');
+    toast.classList.add('show');
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// ========== BACK TO TOP ==========
 window.addEventListener('scroll', () => {
     backToTop.style.display = window.scrollY > 300 ? 'flex' : 'none';
 });
