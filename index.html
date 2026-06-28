@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Noble Fit - Premium Men's Fashion Designed for Confidence. Shop premium shirts, polo t-shirts, denim jeans, and linen pants.">
+    <title>Noble Fit | Premium Men's Clothing Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="announcement-bar">
+        <p>Free Delivery Across India | Shop the Luxury Collection Now</p>
+    </div>
+
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="#">NOBLE <span>FIT</span></a>
+            </div>
+            
+            <nav class="nav-links" id="navLinks">
+                <a href="#" class="active">Home</a>
+                <a href="#shop">Shop</a>
+                <a href="#categories">New Arrivals</a>
+                <a href="#shop">Shirts</a>
+                <a href="#shop">T-Shirts</a>
+                <a href="#about">About Us</a>
+                <a href="#contact">Contact Us</a>
+            </nav>
+
+            <div class="header-actions">
+                <i class="fas fa-search" id="searchBtn" title="Search"></i>
+                <i class="fas fa-moon" id="themeBtn" title="Toggle Theme"></i>
+                <div class="wishlist-icon">
+                    <i class="fas fa-heart" id="wishlistBtn"></i>
+                    <span class="badge" id="wishlistCount">0</span>
+                </div>
+                <div class="cart-icon">
+                    <i class="fas fa-shopping-bag" id="cartBtn"></i>
+                    <span class="badge" id="cartCount">0</span>
+                </div>
+                <i class="fas fa-bars" id="menuBtn" class="menu-icon"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-box">
+            <input type="text" placeholder="Search premium collection...">
+            <i class="fas fa-times" id="closeSearch"></i>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="checkout-overlay" id="checkoutOverlay">
+        <div class="checkout-modal">
+            <div class="checkout-header">
+                <h3><i class="fas fa-shopping-bag"></i> Complete Your Order</h3>
+                <i class="fas fa-times" id="closeCheckout"></i>
+            </div>
+            <div class="checkout-order-summary" id="checkoutSummary"></div>
+            <div class="checkout-form">
+                <h4>Delivery Details</h4>
+                <input type="text" id="co-name" placeholder="Full Name *" required>
+                <input type="tel" id="co-mobile" placeholder="Mobile Number *" maxlength="10" required>
+                <textarea id="co-address" placeholder="Full Address *" rows="3" required></textarea>
+                <input type="text" id="co-pincode" placeholder="Pin Code *" maxlength="6" required>
+                <button class="btn btn-gold btn-block" id="placeOrderBtn" onclick="placeOrder()">
+                    <i class="fas fa-check-circle"></i> Place Order
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="success-overlay" id="successOverlay">
+        <div class="success-modal">
+            <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+            <h3>Order Placed Successfully!</h3>
+            <p>Thank you for shopping with <strong>Noble Fit</strong>.<br>We will contact you soon on your mobile number.</p>
+            <button class="btn btn-gold" onclick="closeSuccess()">Continue Shopping</button>
+        </div>
+    </div>
+
+    <div class="sidebar" id="cartSidebar">
+        <div class="sidebar-header">
+            <h3>Your Bag</h3>
+            <i class="fas fa-times" id="closeCart"></i>
+        </div>
+        <div class="sidebar-content" id="cartItems">
+            <p class="empty-msg">Your shopping bag is empty.</p>
+        </div>
+        <div class="sidebar-footer">
+            <div class="total-price">Total: <span>₹0</span></div>
+            <button class="btn btn-gold btn-block" onclick="openCheckout()">Checkout Now</button>
+        </div>
+    </div>
+
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>Elevate Your Style With <br><span class="accent-text">Noble Fit</span></h1>
+            <p>Premium Men's Fashion Designed for Absolute Confidence and Luxury Comfort.</p>
+            <div class="hero-buttons">
+                <a href="#shop" class="btn btn-gold">Shop Now</a>
+                <a href="#categories" class="btn btn-outline">Explore Collection</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="categories" id="categories">
+        <div class="section-title">
+            <h2>Curated Collections</h2>
+            <p>Discover the latest premium trends tailored for you</p>
+        </div>
+        <div class="category-grid">
+            <div class="category-card" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=500&q=80');">
+                <h3>Premium Shirts</h3>
+            </div>
+            <div class="category-card" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&w=500&q=80');">
+                <h3>Polo T-Shirts</h3>
+            </div>
+            <div class="category-card" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=500&q=80');">
+                <h3>Designer T-Shirts</h3>
+            </div>
+            <div class="category-card" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=500&q=80');">
+                <h3>Denim Jeans</h3>
+            </div>
+        </div>
+    </section>
+
+    <section class="products" id="shop">
+        <div class="section-title">
+            <h2>Featured Products</h2>
+            <p>Experience true craftsmanship and premium fabrics</p>
+        </div>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="badge-discount">-20%</div>
+                <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&w=500&q=80" alt="Premium Polo T-Shirt">
+                    <i class="far fa-heart wishlist-icon-btn" onclick="toggleWishlist(this)"></i>
+                </div>
+                <div class="product-info">
+                    <h3>Premium Polo T-Shirt</h3>
+                    <div class="price">
+                        <span class="curr-price">₹800</span>
+                        <span class="orig-price">₹1000</span>
+                    </div>
+                    <div class="prod-btns">
+                        <button class="btn btn-sm btn-dark" onclick="addToCart('Premium Polo T-Shirt', 800)">Add to Cart</button>
+                        <button class="btn btn-sm btn-gold" onclick="buyNow('Premium Polo T-Shirt', 800)">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="badge-discount">-15%</div>
+                <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=500&q=80" alt="Premium Linen Pants">
+                    <i class="far fa-heart wishlist-icon-btn" onclick="toggleWishlist(this)"></i>
+                </div>
+                <div class="product-info">
+                    <h3>Premium Linen Pants</h3>
+                    <div class="price">
+                        <span class="curr-price">₹1105</span>
+                        <span class="orig-price">₹1300</span>
+                    </div>
+                    <div class="prod-btns">
+                        <button class="btn btn-sm btn-dark" onclick="addToCart('Premium Linen Pants', 1105)">Add to Cart</button>
+                        <button class="btn btn-sm btn-gold" onclick="buyNow('Premium Linen Pants', 1105)">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="badge-discount">-18%</div>
+                <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=500&q=80" alt="Premium Denim Jeans">
+                    <i class="far fa-heart wishlist-icon-btn" onclick="toggleWishlist(this)"></i>
+                </div>
+                <div class="product-info">
+                    <h3>Premium Denim Jeans</h3>
+                    <div class="price">
+                        <span class="curr-price">₹1300</span>
+                        <span class="orig-price">₹1600</span>
+                    </div>
+                    <div class="prod-btns">
+                        <button class="btn btn-sm btn-dark" onclick="addToCart('Premium Denim Jeans', 1300)">Add to Cart</button>
+                        <button class="btn btn-sm btn-gold" onclick="buyNow('Premium Denim Jeans', 1300)">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="badge-discount">-16%</div>
+                <div class="img-container">
+                    <img src=https://i.ibb.co/mV4VWpLX/Striped-Shirt.png alt=" Premium Striped Shirt">
+                    <i class="far fa-heart wishlist-icon-btn" onclick="toggleWishlist(this)"></i>
+                </div>
+                <div class="product-info">
+                    <h3>Designer Casual Shirt</h3>
+                    <div class="price">
+                        <span class="curr-price">₹999</span>
+                        <span class="orig-price">₹1200</span>
+                    </div>
+                    <div class="prod-btns">
+                        <button class="btn btn-sm btn-dark" onclick="addToCart('Designer Casual Shirt', 999)">Add to Cart</button>
+                        <button class="btn btn-sm btn-gold" onclick="buyNow('Designer Casual Shirt', 999)">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="features-grid">
+            <div class="feature-item"><i class="fas fa-gem"></i><h4>Premium Fabric</h4></div>
+            <div class="feature-item"><i class="fas fa-tshirt"></i><h4>Trendy Designs</h4></div>
+            <div class="feature-item"><i class="fas fa-sliders-h"></i><h4>Comfortable Fit</h4></div>
+            <div class="feature-item"><i class="fas fa-tags"></i><h4>Affordable Pricing</h4></div>
+            <div class="feature-item"><i class="fas fa-shield-alt"></i><h4>Secure Shopping</h4></div>
+            <div class="feature-item"><i class="fas fa-shipping-fast"></i><h4>Fast Delivery</h4></div>
+        </div>
+    </section>
+
+    <section class="about-section" id="about">
+        <div class="about-content">
+            <h2>About Noble Fit</h2>
+            <p>Noble Fit is a premium men's clothing brand dedicated to delivering stylish, comfortable, and high-quality fashion for modern men. Our mission is to provide fashionable apparel that combines elegance, comfort, and affordability. Every product is carefully selected to ensure customers receive the best quality and latest trends.</p>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="section-title">
+            <h2>Customer Reviews</h2>
+        </div>
+        <div class="testimonial-grid">
+            <div class="review-card">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>"Excellent quality and fitting."</p>
+                <h5>– Rahul</h5>
+            </div>
+            <div class="review-card">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>"Premium fabric and fast delivery."</p>
+                <h5>– Aman</h5>
+            </div>
+            <div class="review-card">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>"Best clothing brand for men."</p>
+                <h5>– Karan</h5>
+            </div>
+        </div>
+    </section>
+
+    <section class="newsletter">
+        <h2>Stay Updated</h2>
+        <p>Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.</p>
+        <div class="subscribe-form">
+            <input type="email" placeholder="Enter your email address">
+            <button class="btn btn-gold">Subscribe</button>
+        </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2>Get In Touch</h2>
+                <p><strong>Owner:</strong> Pratham Sharma</p>
+                <p><strong>Phone:</strong> +91 8968350522</p>
+                <div class="social-buttons">
+                    <a href="https://wa.me/918968350522" target="_blank" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp Us</a>
+                </div>
+            </div>
+            <div class="contact-form">
+                <form action="#">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <input type="tel" placeholder="Your Phone Number">
+                    <textarea placeholder="Your Message" rows="4" required></textarea>
+                    <button type="submit" class="btn btn-gold">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#">Home</a>
+            <a href="#shop">Shop</a>
+            <a href="#about">About Us</a>
+            <a href="#contact">Contact Us</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Return Policy</a>
+        </div>
+        <div class="footer-socials">
+            <a href="https://www.facebook.com/noblefitofficial" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/noblefit8968/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/918968350522" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <p class="copyright">&copy; 2026 Noble Fit. All Rights Reserved. <br> Designed for Noble Fit by Pratham Sharma.</p>
+    </footer>
+
+    <button id="backToTop"><i class="fas fa-arrow-up"></i></button>
+
+    <script src="script.js"></script>
+</body>
+</html>
