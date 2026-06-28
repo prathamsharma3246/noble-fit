@@ -388,11 +388,14 @@ footer { background: #000; color: #fff; padding: 50px 20px; text-align: center; 
 }
 
 .size-popup .popup-box{
+
     background:#fff;
-    width:350px;
-    padding:25px;
-    border-radius:10px;
+    width:420px;
+    max-width:95%;
+    padding:30px;
+    border-radius:15px;
     text-align:center;
+
 }
 
 .size-popup h3{
@@ -435,4 +438,110 @@ footer { background: #000; color: #fff; padding: 50px 20px; text-align: center; 
 
 .confirm-btn:hover{
     background:#c39b22;
+}
+
+/* Selected Size */
+
+.size-buttons button.active{
+    background:#D4AF37;
+    color:#000;
+    border:2px solid #000;
+}
+
+/* Quantity */
+
+.quantity-box{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:15px;
+    margin:20px 0;
+}
+
+.quantity-box button{
+    width:35px;
+    height:35px;
+    border:none;
+    background:#D4AF37;
+    color:#000;
+    font-size:20px;
+    font-weight:bold;
+    cursor:pointer;
+    border-radius:6px;
+}
+
+.quantity-box span{
+    font-size:20px;
+    font-weight:bold;
+    width:30px;
+    text-align:center;
+}
+
+.popup-btn{
+    width:100%;
+    padding:14px;
+    background:#D4AF37;
+    color:#000;
+    border:none;
+    border-radius:6px;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+.popup-btn:hover{
+    background:#c79d22;
+}
+
+.buy-btn{
+
+    width:100%;
+
+    padding:14px;
+
+    margin-top:12px;
+
+    background:#111;
+
+    color:white;
+
+    border:none;
+
+    border-radius:6px;
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+.buy-btn:hover{
+
+    background:#000;
+
+}
+
+#popupProductName{
+
+    font-size:32px;
+
+    font-weight:bold;
+
+    margin-bottom:10px;
+
+}
+
+#popupProductPrice{
+
+    color:#D4AF37;
+
+    font-size:28px;
+
+    font-weight:bold;
+
+    margin-bottom:15px;
+
 }
