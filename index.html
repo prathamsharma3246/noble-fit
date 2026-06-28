@@ -53,7 +53,7 @@
         </div>
     </div>
 
-    <div id="sizePopup" class="size-popup">
+<div id="sizePopup" class="size-popup">
 
     <div class="popup-box">
 
@@ -63,7 +63,9 @@
 
         <h3 id="popupProductPrice">₹0</h3>
 
-        <p id="popupDescription">Premium Quality Product</p>
+        <p class="popup-desc">
+            Premium Quality Product
+        </p>
 
         <h4>Select Size</h4>
 
@@ -79,9 +81,9 @@
 
         <h4>Quantity</h4>
 
-        <div class="quantity-box">
+        <div class="qty-box">
 
-            <button onclick="decreaseQty()">-</button>
+            <button onclick="decreaseQty()">−</button>
 
             <span id="qtyValue">1</span>
 
@@ -89,11 +91,15 @@
 
         </div>
 
-        <button class="confirm-btn" onclick="confirmAddToCart()">
+        <button class="confirm-btn"
+            onclick="confirmAddToCart()">
+            <i class="fas fa-shopping-cart"></i>
             Add To Cart
         </button>
 
-        <button class="buy-btn" onclick="confirmBuyNow()">
+        <button class="buy-btn"
+            onclick="confirmBuyNow()">
+            <i class="fas fa-bolt"></i>
             Buy Now
         </button>
 
