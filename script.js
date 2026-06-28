@@ -44,29 +44,54 @@ closeSearch.addEventListener('click', () => searchOverlay.style.display = 'none'
 cartBtn.addEventListener('click', () => cartSidebar.classList.add('active'));
 closeCart.addEventListener('click', () => cartSidebar.classList.remove('active'));
 
-// --- Add to Cart ---
+// ---------- Size Popup ----------
+let selectedProduct = "";
+let selectedPrice = 0;
+let selectedSize = "";
+
 function addToCart(pName, pPrice) {
+
+    selectedProduct = pName;
+    selectedPrice = pPrice;
+
+    document.getElementById("sizePopup").style.display = "flex";
+
+}
+function selectSize(size){
+
+    selectedSize = size;
+
+    alert("Selected Size : " + size);
+
+}
+function confirmAddToCart(){
+
+    if(selectedSize==""){
+
+        alert("Please Select Size");
+
+        return;
+
+    }
+
     cartCount++;
-    document.getElementById('cartCount').innerText = cartCount;
-    cartItems.push({ name: pName, price: pPrice });
 
-    const cartItemsEl = document.getElementById('cartItems');
-    const emptyMsg = cartItemsEl.querySelector('.empty-msg');
-    if (emptyMsg) emptyMsg.remove();
+    document.getElementById("cartCount").innerText=cartCount;
 
-    const itemIndex = cartItems.length - 1;
-    const itemRow = document.createElement('div');
-    itemRow.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;border-bottom:1px solid var(--border-color);padding-bottom:10px;';
-    itemRow.innerHTML = `
-        <div>
-            <p style="font-weight:600;font-size:14px;">${pName}</p>
-            <p style="color:var(--accent-color);font-size:12px;">₹${pPrice}</p>
-        </div>
-        <i class="fas fa-trash-alt" style="cursor:pointer;color:red;font-size:14px;" onclick="removeItem(this, ${pPrice}, ${itemIndex})"></i>
-    `;
-    cartItemsEl.appendChild(itemRow);
-    updateTotal(pPrice);
-    cartSidebar.classList.add('active');
+    cartItems.push({
+
+        name:selectedProduct,
+
+        price:selectedPrice,
+
+        size:selectedSize
+
+    });
+
+    alert(selectedProduct+" Added Successfully");
+
+    document.getElementById("sizePopup").style.display="none";
+
 }
 
 // --- Remove from Cart ---
