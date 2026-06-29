@@ -47,7 +47,55 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('backToTop').style.display = window.scrollY > 300 ? 'flex' : 'none';
     });
     document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
+
+    // ============================================================
+    // PREMIUM UPDATES: DYNAMIC POPUP LISTENERS (NEW)
+    // ============================================================
+    
+    // 1. Dynamic Size Selection
+    const sizeButtons = document.querySelectorAll('.popup-size-grid .sz-btn');
+    sizeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Agar button disabled state me ho to click rok do
+            if (button.classList.contains('disabled')) return;
+            
+            // Purane active class ko remove karo aur naye wale par add karo
+            sizeButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            
+            // State variable update karo
+            popup.size = button.getAttribute('data-size');
+            document.getElementById('popupSizeErr').style.display = 'none';
+        });
+    });
+
+    // 2. Quantity Decrement (-) Button Listener
+    document.getElementById('popupDecreaseQty').addEventListener('click', () => {
+        if (popup.qty > 1) {
+            popup.qty--;
+            updatePopupQtyAndTotal();
+        }
+    });
+
+    // 3. Quantity Increment (+) Button Listener
+    document.getElementById('popupIncreaseQty').addEventListener('click', () => {
+        if (popup.qty < 10) { // Max limit 10 items
+            popup.qty++;
+            updatePopupQtyAndTotal();
+        }
+    });
+
+    // 4. Confirm Buttons Connectors
+    document.getElementById('popupCartBtn').addEventListener('click', confirmAddToCart);
+    document.getElementById('popupBuyBtn').addEventListener('click', confirmBuyNow);
 });
+
+// Helper function to keep text and calculations synced smoothly
+function updatePopupQtyAndTotal() {
+    document.getElementById('popupQtyNum').textContent = popup.qty;
+    const finalPrice = popup.price * popup.qty;
+    document.getElementById('popupTotal').textContent = '₹' + finalPrice.toLocaleString('en-IN');
+}
 
 // ============================================================
 // SIZE POPUP — open
@@ -66,13 +114,17 @@ function openPopup(name, price, origPrice, img, isBuyNow) {
     discEl.textContent = disc > 0 ? `-${disc}%` : '';
     discEl.style.display = disc > 0 ? 'inline-block' : 'none';
 
-    // Thumb image
+    // Premium Thumb image rendering via image node src
     const thumb = document.getElementById('popupThumb');
-    if (img) { thumb.style.backgroundImage = `url('${img}')`; thumb.innerHTML = ''; }
-    else      { thumb.style.backgroundImage = 'none'; thumb.innerHTML = '<i class="fas fa-tshirt"></i>'; }
+    if (img) { 
+        thumb.src = img; 
+        thumb.style.display = 'block';
+    } else { 
+        thumb.style.display = 'none'; 
+    }
 
-    // Reset size + qty
-    document.querySelectorAll('.sz-btn').forEach(b => b.classList.remove('active'));
+    // Reset size grid & active classes safely
+    document.querySelectorAll('.popup-size-grid .sz-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('popupSizeErr').style.display = 'none';
     document.getElementById('popupQtyNum').textContent = '1';
     document.getElementById('popupTotal').textContent  = '₹' + price.toLocaleString('en-IN');
@@ -89,25 +141,6 @@ function openBuyNow(n,p,o,i) { openPopup(n,p,o,i||'',true);  }
 function closeSizePopup() {
     document.getElementById('sizePopup').style.display = 'none';
     document.body.style.overflow = '';
-}
-
-// ============================================================
-// SIZE SELECTION
-// ============================================================
-function selectSize(btn, size) {
-    popup.size = size;
-    document.querySelectorAll('.sz-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('popupSizeErr').style.display = 'none';
-}
-
-// ============================================================
-// QUANTITY
-// ============================================================
-function changeQty(delta) {
-    popup.qty = Math.max(1, Math.min(10, popup.qty + delta));
-    document.getElementById('popupQtyNum').textContent = popup.qty;
-    document.getElementById('popupTotal').textContent  = '₹' + (popup.price * popup.qty).toLocaleString('en-IN');
 }
 
 // ============================================================
@@ -206,6 +239,7 @@ function openCheckout() {
     openCheckoutWithItems(cartItems);
 }
 
+// (Baki bacha checkout aur validation function code unchanged waise hi handle hoga)
 function openCheckoutWithItems(items) {
     const grand    = items.reduce((s,i) => s + i.price*i.qty, 0);
     const totalQty = items.reduce((s,i) => s + i.qty, 0);
@@ -258,9 +292,9 @@ async function placeOrder() {
     const address = document.getElementById('co-address').value.trim();
     const pincode = document.getElementById('co-pincode').value.trim();
 
-    if (!name)                              { fieldErr('co-name');    return; }
+    if (!name)                               { fieldErr('co-name');    return; }
     if (!mobile||mobile.length!==10||isNaN(mobile)) { fieldErr('co-mobile');  return; }
-    if (!address)                           { fieldErr('co-address'); return; }
+    if (!address)                            { fieldErr('co-address'); return; }
     if (!pincode||pincode.length!==6||isNaN(pincode)) { fieldErr('co-pincode'); return; }
 
     const overlay     = document.getElementById('checkoutOverlay');
