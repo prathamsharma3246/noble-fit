@@ -48,9 +48,6 @@
     </div>
 </div>
 
-<!-- ================================================
-     SIZE & QTY POPUP
-     ================================================ -->
 <div id="sizePopup" class="size-popup">
     <div class="popup-box">
 
@@ -58,48 +55,47 @@
             <i class="fas fa-times"></i>
         </button>
 
-        <!-- Product Info -->
         <div class="popup-product-section">
-            <div class="popup-thumb" id="popupThumb"></div>
+            <div class="popup-thumb-wrapper">
+                <img id="popupThumb" src="" alt="Product Preview">
+            </div>
             <div class="popup-product-meta">
                 <p class="popup-brand">Noble Fit</p>
                 <h3 id="popupProductName">Product Name</h3>
                 <div class="popup-price-row">
                     <span class="popup-curr-price" id="popupCurrPrice">₹0</span>
                     <span class="popup-orig-price" id="popupOrigPrice">₹0</span>
-                    <span class="popup-disc-pill" id="popupDisc"></span>
+                    <span class="popup-disc-pill" id="popupDisc">0% OFF</span>
                 </div>
             </div>
         </div>
 
         <div class="popup-hr"></div>
 
-        <!-- Size -->
         <div class="popup-size-section">
             <div class="popup-label-row">
                 <span class="popup-label">Select Size <span class="popup-req">*</span></span>
                 <span class="popup-hint">Choose one to continue</span>
             </div>
             <div class="popup-size-grid" id="popupSizeGrid">
-                <button class="sz-btn" onclick="selectSize(this,'S')">S</button>
-                <button class="sz-btn" onclick="selectSize(this,'M')">M</button>
-                <button class="sz-btn" onclick="selectSize(this,'L')">L</button>
-                <button class="sz-btn" onclick="selectSize(this,'XL')">XL</button>
-                <button class="sz-btn" onclick="selectSize(this,'XXL')">XXL</button>
+                <button class="sz-btn" data-size="S">S</button>
+                <button class="sz-btn" data-size="M">M</button>
+                <button class="sz-btn" data-size="L">L</button>
+                <button class="sz-btn" data-size="XL">XL</button>
+                <button class="sz-btn" data-size="XXL">XXL</button>
             </div>
             <div class="popup-size-err" id="popupSizeErr">
                 <i class="fas fa-exclamation-triangle"></i> Please select a size first
             </div>
         </div>
 
-        <!-- Qty + Total Row -->
         <div class="popup-qty-total-row">
             <div class="popup-qty-block">
                 <span class="popup-label">Quantity</span>
                 <div class="popup-qty-ctrl">
-                    <button onclick="changeQty(-1)">−</button>
+                    <button id="popupDecreaseQty">−</button>
                     <span id="popupQtyNum">1</span>
-                    <button onclick="changeQty(1)">+</button>
+                    <button id="popupIncreaseQty">+</button>
                 </div>
             </div>
             <div class="popup-total-block">
@@ -108,12 +104,11 @@
             </div>
         </div>
 
-        <!-- Action Buttons -->
         <div class="popup-actions">
-            <button class="popup-btn-cart" id="popupCartBtn" onclick="confirmAddToCart()">
+            <button class="popup-btn-cart" id="popupCartBtn">
                 <i class="fas fa-shopping-bag"></i> Add to Cart
             </button>
-            <button class="popup-btn-buy" onclick="confirmBuyNow()">
+            <button class="popup-btn-buy" id="popupBuyBtn">
                 <i class="fas fa-bolt"></i> Buy Now
             </button>
         </div>
@@ -121,9 +116,6 @@
     </div>
 </div>
 
-<!-- ================================================
-     CART SIDEBAR
-     ================================================ -->
 <div class="sidebar" id="cartSidebar">
     <div class="sidebar-header">
         <h3><i class="fas fa-shopping-bag"></i> Your Bag</h3>
@@ -148,9 +140,6 @@
     </div>
 </div>
 
-<!-- ================================================
-     CHECKOUT MODAL
-     ================================================ -->
 <div class="checkout-overlay" id="checkoutOverlay">
     <div class="checkout-modal">
         <div class="checkout-header">
@@ -160,8 +149,8 @@
         <div id="checkoutSummary"></div>
         <div class="checkout-form">
             <h4><i class="fas fa-map-marker-alt"></i> Delivery Details</h4>
-            <input type="text"   id="co-name"    placeholder="Full Name *">
-            <input type="tel"    id="co-mobile"  placeholder="Mobile Number *" maxlength="10">
+            <input type="text"   id="co-name"     placeholder="Full Name *">
+            <input type="tel"    id="co-mobile"   placeholder="Mobile Number *" maxlength="10">
             <textarea            id="co-address" placeholder="Full Address *" rows="3"></textarea>
             <input type="text"   id="co-pincode" placeholder="Pin Code *" maxlength="6">
             <button class="btn btn-gold btn-block" id="placeOrderBtn" onclick="placeOrder()">
@@ -172,7 +161,6 @@
     </div>
 </div>
 
-<!-- Success Modal -->
 <div class="success-overlay" id="successOverlay">
     <div class="success-modal">
         <div class="success-icon"><i class="fas fa-check-circle"></i></div>
@@ -182,9 +170,6 @@
     </div>
 </div>
 
-<!-- ================================================
-     MAIN CONTENT
-     ================================================ -->
 <section class="hero-section">
     <div class="hero-content">
         <h1>Elevate Your Style With<br><span class="accent-text">Noble Fit</span></h1>
@@ -304,9 +289,9 @@
 <section class="testimonials">
     <div class="section-title"><h2>Customer Reviews</h2></div>
     <div class="testimonial-grid">
-        <div class="review-card"><div class="stars">⭐⭐⭐⭐⭐</div><p>"Excellent quality and fitting."</p><h5>– Rahul</h5></div>
-        <div class="review-card"><div class="stars">⭐⭐⭐⭐⭐</div><p>"Premium fabric and fast delivery."</p><h5>– Aman</h5></div>
-        <div class="review-card"><div class="stars">⭐⭐⭐⭐⭐</div><p>"Best clothing brand for men."</p><h5>– Karan</h5></div>
+        <div class="review-card"><div class="stars">⭐⭐⭐⭐•</div><p>"Excellent quality and fitting."</p><h5>– Rahul</h5></div>
+        <div class="review-card"><div class="stars">⭐⭐⭐⭐•</div><p>"Premium fabric and fast delivery."</p><h5>– Aman</h5></div>
+        <div class="review-card"><div class="stars">⭐⭐⭐⭐•</div><p>"Best clothing brand for men."</p><h5>– Karan</h5></div>
     </div>
 </section>
 
