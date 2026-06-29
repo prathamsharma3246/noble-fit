@@ -174,8 +174,7 @@ footer { background:#000; color:#fff; padding:48px 20px; text-align:center; bord
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     padding: 0 0 24px;
     position: relative;
-    max-height: 70vh;
-    overflow-y: hidden;
+    overflow-y: visible;
     animation: popupScaleIn 0.3s cubic-bezier(.34,1.3,.64,1);
 }
 
@@ -209,8 +208,8 @@ footer { background:#000; color:#fff; padding:48px 20px; text-align:center; bord
 }
 
 .popup-thumb {
-    width: 80px;
-    height: 90px;
+    width: 250px;
+    height: 300px;
     flex-shrink: 0;
     border-radius: 8px;
     object-fit: cover;
