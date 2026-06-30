@@ -51,14 +51,16 @@
 <div id="sizePopup" class="size-popup">
     <div class="popup-box">
 
-        <button class="popup-close-btn" onclick="closeSizePopup()">
-            <i class="fas fa-times"></i>
-        </button>
+        <div class="popup-image-side">
+            <img id="popupThumb" src="" alt="Product Preview">
+        </div>
 
-        <div class="popup-product-section">
-            <div class="popup-thumb-wrapper">
-                <img id="popupThumb" src="" alt="Product Preview">
-            </div>
+        <div class="popup-content-side">
+
+            <button class="popup-close-btn" onclick="closeSizePopup()">
+                <i class="fas fa-times"></i>
+            </button>
+
             <div class="popup-product-meta">
                 <p class="popup-brand">Noble Fit</p>
                 <h3 id="popupProductName">Product Name</h3>
@@ -68,51 +70,51 @@
                     <span class="popup-disc-pill" id="popupDisc">0% OFF</span>
                 </div>
             </div>
-        </div>
 
-        <div class="popup-hr"></div>
+            <div class="popup-hr"></div>
 
-        <div class="popup-size-section">
-            <div class="popup-label-row">
-                <span class="popup-label">Select Size <span class="popup-req">*</span></span>
-                <span class="popup-hint">Choose one to continue</span>
-            </div>
-            <div class="popup-size-grid" id="popupSizeGrid">
-                <button class="sz-btn" data-size="S">S</button>
-                <button class="sz-btn" data-size="M">M</button>
-                <button class="sz-btn" data-size="L">L</button>
-                <button class="sz-btn" data-size="XL">XL</button>
-                <button class="sz-btn" data-size="XXL">XXL</button>
-            </div>
-            <div class="popup-size-err" id="popupSizeErr">
-                <i class="fas fa-exclamation-triangle"></i> Please select a size first
-            </div>
-        </div>
-
-        <div class="popup-qty-total-row">
-            <div class="popup-qty-block">
-                <span class="popup-label">Quantity</span>
-                <div class="popup-qty-ctrl">
-                    <button id="popupDecreaseQty">−</button>
-                    <span id="popupQtyNum">1</span>
-                    <button id="popupIncreaseQty">+</button>
+            <div class="popup-size-section">
+                <div class="popup-label-row">
+                    <span class="popup-label">Select Size <span class="popup-req">*</span></span>
+                    <span class="popup-hint">Choose one to continue</span>
+                </div>
+                <div class="popup-size-grid" id="popupSizeGrid">
+                    <button class="sz-btn" data-size="S">S</button>
+                    <button class="sz-btn" data-size="M">M</button>
+                    <button class="sz-btn" data-size="L">L</button>
+                    <button class="sz-btn" data-size="XL">XL</button>
+                    <button class="sz-btn" data-size="XXL">XXL</button>
+                </div>
+                <div class="popup-size-err" id="popupSizeErr">
+                    <i class="fas fa-exclamation-triangle"></i> Please select a size first
                 </div>
             </div>
-            <div class="popup-total-block">
-                <span class="popup-total-label">Total</span>
-                <span class="popup-total-amt" id="popupTotal">₹0</span>
+
+            <div class="popup-qty-total-row">
+                <div class="popup-qty-block">
+                    <span class="popup-label">Quantity</span>
+                    <div class="popup-qty-ctrl">
+                        <button id="popupDecreaseQty">−</button>
+                        <span id="popupQtyNum">1</span>
+                        <button id="popupIncreaseQty">+</button>
+                    </div>
+                </div>
+                <div class="popup-total-block">
+                    <span class="popup-total-label">Total</span>
+                    <span class="popup-total-amt" id="popupTotal">₹0</span>
+                </div>
             </div>
-        </div>
 
-        <div class="popup-actions">
-            <button class="popup-btn-cart" id="popupCartBtn">
-                <i class="fas fa-shopping-bag"></i> Add to Cart
-            </button>
-            <button class="popup-btn-buy" id="popupBuyBtn">
-                <i class="fas fa-bolt"></i> Buy Now
-            </button>
-        </div>
+            <div class="popup-actions">
+                <button class="popup-btn-cart" id="popupCartBtn">
+                    <i class="fas fa-shopping-bag"></i> Add to Cart
+                </button>
+                <button class="popup-btn-buy" id="popupBuyBtn">
+                    <i class="fas fa-bolt"></i> Buy Now
+                </button>
+            </div>
 
+        </div>
     </div>
 </div>
 
