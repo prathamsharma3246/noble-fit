@@ -44,9 +44,9 @@ a { text-decoration:none; color:inherit; }
 /* --- Header --- */
 .main-header { position:sticky; top:0; background:var(--bg); z-index:1000; border-bottom:1px solid var(--border); box-shadow:0 2px 8px rgba(0,0,0,.07); }
 .header-container { display:flex; align-items:center; justify-content:space-between; max-width:1300px; margin:0 auto; padding:14px 20px; }
-.logo a { font-size:22px; font-weight:900; letter-spacing:2px; display:flex; align-items:center; }
-.logo span { color:var(--gold); }
-.logo img { height:46px; width:auto; display:block; object-fit:contain; }
+.logo a { font-size:21px; font-weight:900; letter-spacing:2px; display:flex; align-items:center; gap:12px; }
+.logo-text span { color:var(--gold); }
+.logo img { height:44px; width:auto; display:block; object-fit:contain; flex-shrink:0; }
 .nav-links a { margin:0 13px; font-size:13px; font-weight:600; text-transform:uppercase; transition:color .2s; }
 .nav-links a:hover, .nav-links a.active { color:var(--gold); }
 .header-actions { display:flex; align-items:center; gap:18px; }
@@ -63,12 +63,11 @@ a { text-decoration:none; color:inherit; }
 #closeSearch { position:absolute; right:0; top:14px; color:#fff; font-size:22px; cursor:pointer; }
 
 /* --- Hero --- */
-.hero-section { position:relative; }
-.hero-banner-link { display:block; line-height:0; }
-.hero-banner-img { width:100%; height:auto; display:block; }
+.hero-section { position:relative; height:75vh; min-height:420px; background:url('noble-fit-banner.jpg') center/cover no-repeat; overflow:hidden; }
+.hero-link { position:absolute; inset:0; display:block; z-index:1; }
 .accent-text { color:var(--gold); }
 .hero-buttons .btn { margin:6px; }
-.hero-buttons-mobile { display:none; text-align:center; padding:18px 20px; background:var(--bg,#fff); }
+.hero-buttons-mobile { display:none; }
 
 /* --- Section Title --- */
 .section-title { text-align:center; margin:60px 0 38px; }
@@ -549,7 +548,8 @@ footer { background:#000; color:#fff; padding:48px 20px; text-align:center; bord
     .nav-links.active { left:0; }
     .nav-links a { margin:14px 0; font-size:17px; }
     .contact-container { grid-template-columns:1fr; }
-    .hero-buttons-mobile { display:flex; justify-content:center; flex-wrap:wrap; gap:10px; }
+    .hero-section { height:auto; min-height:0; aspect-ratio:1376/768; background-size:contain; background-color:#6b665f; }
+    .hero-buttons-mobile { display:flex; justify-content:center; flex-wrap:wrap; gap:10px; position:absolute; left:0; right:0; bottom:12px; z-index:2; padding:0 12px; }
     .subscribe-form { flex-direction:column; align-items:center; gap:10px; }
     .subscribe-form input { width:100%; max-width:300px; }
     .sidebar { width:100%; right:-100%; }
