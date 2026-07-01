@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Noble Fit | Premium Men's Clothing Store</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,7 +18,7 @@
 
 <header class="main-header">
     <div class="header-container">
-        <div class="logo"><a href="#"><img src="noble-fit-logo.png" alt="Noble Fit"><span class="logo-text">NOBLE <span>FIT</span></span></a></div>
+        <div class="logo"><a href="#"><img src="noble-fit-logo.png" alt="Noble Fit"></a></div>
         <nav class="nav-links" id="navLinks">
             <a href="#" class="active">Home</a>
             <a href="#shop">Shop</a>
@@ -172,8 +175,11 @@
     </div>
 </div>
 
-<section class="hero-section" id="heroSection">
-    <a href="#shop" class="hero-link" aria-label="Shop the Noble Fit collection"></a>
+<section class="hero-section">
+    <a href="#shop" class="hero-banner-link" aria-label="Shop the Noble Fit collection">
+        <img src="noble-fit-banner.jpg" alt="Noble Fit - Elegance in Every Thread. Premium Menswear." class="hero-banner-img">
+        <div class="hero-scroll-cue"><span>Scroll</span><i class="fas fa-chevron-down"></i></div>
+    </a>
     <div class="hero-buttons hero-buttons-mobile">
         <a href="#shop" class="btn btn-gold">Shop Now</a>
         <a href="#categories" class="btn btn-outline">Explore Collection</a>
@@ -182,21 +188,49 @@
 
 <section class="categories" id="categories">
     <div class="section-title">
+        <span class="eyebrow">Shop By Category</span>
         <h2>Curated Collections</h2>
         <p>Discover the latest premium trends tailored for you</p>
+        <div class="title-rule"></div>
     </div>
     <div class="category-grid">
-        <div class="category-card" style="background-image:linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.6)),url('https://res.cloudinary.com/dn3waiq5c/image/upload/f_auto,q_auto/Linen_Pants_h6ujyz');"><h3>Premium Linen Pants</h3></div>
-        <div class="category-card" style="background-image:linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.6)),url('https://res.cloudinary.com/dn3waiq5c/image/upload/f_auto,q_auto/T-Shirt_uf3crf');"><h3>Polo T-Shirts</h3></div>
-        <div class="category-card" style="background-image:linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.6)),url('https://res.cloudinary.com/dn3waiq5c/image/upload/f_auto,q_auto/Denim_Jeans_ax3knb');"><h3>Denim Jeans</h3></div>
-        <div class="category-card" style="background-image:linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.6)),url('https://res.cloudinary.com/dn3waiq5c/image/upload/f_auto,q_auto/Striped_Shirt_a8zpf6');"><h3>Premium Shirts</h3></div>
+        <a href="#shop" class="category-card" style="background-image:url('https://res.cloudinary.com/dn3waiq5c/image/upload/f_auto,q_auto/Linen_Pants_h6ujyz');">
+            <div class="category-card-inner">
+                <span class="cat-eyebrow">Bottoms</span>
+                <h3>Premium Linen Pants</h3>
+                <span class="cat-link">Shop Now <i class="fas fa-arrow-right"></i></span>
+            </div>
+        </a>
+        <a href="#shop" class="category-card" style="background-image:url('https://res.cloudinary.com/dn3waiq5c/image/upload/f_auto,q_auto/T-Shirt_uf3crf');">
+            <div class="category-card-inner">
+                <span class="cat-eyebrow">Casual Wear</span>
+                <h3>Polo T-Shirts</h3>
+                <span class="cat-link">Shop Now <i class="fas fa-arrow-right"></i></span>
+            </div>
+        </a>
+        <a href="#shop" class="category-card" style="background-image:url('https://res.cloudinary.com/dn3waiq5c/image/upload/f_auto,q_auto/Denim_Jeans_ax3knb');">
+            <div class="category-card-inner">
+                <span class="cat-eyebrow">Bottoms</span>
+                <h3>Denim Jeans</h3>
+                <span class="cat-link">Shop Now <i class="fas fa-arrow-right"></i></span>
+            </div>
+        </a>
+        <a href="#shop" class="category-card" style="background-image:url('https://res.cloudinary.com/dn3waiq5c/image/upload/f_auto,q_auto/Striped_Shirt_a8zpf6');">
+            <div class="category-card-inner">
+                <span class="cat-eyebrow">Formal</span>
+                <h3>Premium Shirts</h3>
+                <span class="cat-link">Shop Now <i class="fas fa-arrow-right"></i></span>
+            </div>
+        </a>
     </div>
 </section>
 
 <section class="shop" id="shop">
     <div class="section-title">
+        <span class="eyebrow">Handpicked For You</span>
         <h2>Featured Products</h2>
         <p>Experience true craftsmanship and premium fabrics</p>
+        <div class="title-rule"></div>
     </div>
     <div class="product-grid">
 
@@ -207,6 +241,7 @@
                 <i class="far fa-heart wishlist-icon-btn" onclick="toggleWishlist(this)"></i>
             </div>
             <div class="product-info">
+                <div class="product-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><span>(128)</span></div>
                 <h3>Premium Polo T-Shirt</h3>
                 <div class="price"><span class="curr-price">₹800</span><span class="orig-price">₹1,000</span></div>
                 <div class="prod-btns">
@@ -223,6 +258,7 @@
                 <i class="far fa-heart wishlist-icon-btn" onclick="toggleWishlist(this)"></i>
             </div>
             <div class="product-info">
+                <div class="product-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><span>(84)</span></div>
                 <h3>Premium Linen Pants</h3>
                 <div class="price"><span class="curr-price">₹1,105</span><span class="orig-price">₹1,300</span></div>
                 <div class="prod-btns">
@@ -239,6 +275,7 @@
                 <i class="far fa-heart wishlist-icon-btn" onclick="toggleWishlist(this)"></i>
             </div>
             <div class="product-info">
+                <div class="product-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><span>(95)</span></div>
                 <h3>Premium Denim Jeans</h3>
                 <div class="price"><span class="curr-price">₹1,300</span><span class="orig-price">₹1,600</span></div>
                 <div class="prod-btns">
@@ -255,6 +292,7 @@
                 <i class="far fa-heart wishlist-icon-btn" onclick="toggleWishlist(this)"></i>
             </div>
             <div class="product-info">
+                <div class="product-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><span>(63)</span></div>
                 <h3> Straight Fit Jeans </h3>
                 <div class="price"><span class="curr-price">₹1,200</span><span class="orig-price">₹1,600</span></div>
                 <div class="prod-btns">
@@ -271,6 +309,7 @@
                 <i class="far fa-heart wishlist-icon-btn" onclick="toggleWishlist(this)"></i>
             </div>
             <div class="product-info">
+                <div class="product-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><span>(140)</span></div>
                 <h3>Striped Shirt</h3>
                 <div class="price"><span class="curr-price">₹999</span><span class="orig-price">₹1,200</span></div>
                 <div class="prod-btns">
