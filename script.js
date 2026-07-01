@@ -2,7 +2,7 @@
 // NOBLE FIT — PROFESSIONAL ECOMMERCE SCRIPT
 // ============================================================
 
-const SHEET_URL = 'https://script.google.com/macros/s/AKfycbyWtv_B8KL9ao9B-JHNMsKhwQDUQCYT-vWocvYUfKpgZg0HUmIpd3Il09NZitmqDAfCTA/exec';
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzQgQAWRPs014OJeIJ8jys0G0ujueN4wB5CrJqtvnPYaW2x6eNb7i71uGioQGobQhui/exec';
 
 // --- State ---
 let cartItems   = [];
