@@ -15,7 +15,7 @@
 
 <header class="main-header">
     <div class="header-container">
-        <div class="logo"><a href="#">NOBLE <span>FIT</span></a></div>
+        <div class="logo"><a href="#"><img src="noble-fit-logo.png" alt="Noble Fit"></a></div>
         <nav class="nav-links" id="navLinks">
             <a href="#" class="active">Home</a>
             <a href="#shop">Shop</a>
@@ -173,13 +173,12 @@
 </div>
 
 <section class="hero-section">
-    <div class="hero-content">
-        <h1>Elevate Your Style With<br><span class="accent-text">Noble Fit</span></h1>
-        <p>Premium Men's Fashion Designed for Absolute Confidence and Luxury Comfort.</p>
-        <div class="hero-buttons">
-            <a href="#shop" class="btn btn-gold">Shop Now</a>
-            <a href="#categories" class="btn btn-outline">Explore Collection</a>
-        </div>
+    <a href="#shop" class="hero-banner-link" aria-label="Shop the Noble Fit collection">
+        <img src="noble-fit-banner.jpg" alt="Noble Fit - Elegance in Every Thread. Premium Menswear." class="hero-banner-img">
+    </a>
+    <div class="hero-buttons hero-buttons-mobile">
+        <a href="#shop" class="btn btn-gold">Shop Now</a>
+        <a href="#categories" class="btn btn-outline">Explore Collection</a>
     </div>
 </section>
 
@@ -316,10 +315,10 @@
 <section class="newsletter">
     <h2>Stay Updated</h2>
     <p>Subscribe to get special offers and once-in-a-lifetime deals.</p>
-    <div class="subscribe-form">
-        <input type="email" placeholder="Enter your email address">
-        <button class="btn btn-gold">Subscribe</button>
-    </div>
+    <form class="subscribe-form" id="newsletterForm">
+        <input type="email" id="nl-email" placeholder="Enter your email address" required>
+        <button type="submit" class="btn btn-gold" id="newsletterBtn">Subscribe</button>
+    </form>
 </section>
 
 <section class="contact-section" id="contact">
@@ -332,15 +331,13 @@
                 <a href="https://wa.me/918968350522" target="_blank" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp Us</a>
             </div>
         </div>
-
-        
         <div class="contact-form">
-            <form>
-                <input type="text" placeholder="Your Name">
-                <input type="email" placeholder="Your Email">
-                <input type="tel" placeholder="Your Phone Number">
-                <textarea placeholder="Your Message" rows="4"></textarea>
-                <button type="submit" class="btn btn-gold">Send Message</button>
+            <form id="contactForm">
+                <input type="text" id="ct-name" placeholder="Your Name" required>
+                <input type="email" id="ct-email" placeholder="Your Email" required>
+                <input type="tel" id="ct-phone" placeholder="Your Phone Number">
+                <textarea id="ct-message" placeholder="Your Message" rows="4" required></textarea>
+                <button type="submit" class="btn btn-gold" id="contactBtn">Send Message</button>
             </form>
         </div>
     </div>
