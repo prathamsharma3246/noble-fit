@@ -88,6 +88,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // 4. Confirm Buttons Connectors
     document.getElementById('popupCartBtn').addEventListener('click', confirmAddToCart);
     document.getElementById('popupBuyBtn').addEventListener('click', confirmBuyNow);
+
+    // 5. Contact form -> Google Sheet
+    document.getElementById('contactForm').addEventListener('submit', handleContactSubmit);
+
+    // 6. Newsletter form -> Google Sheet
+    document.getElementById('newsletterForm').addEventListener('submit', handleNewsletterSubmit);
 });
 
 // Helper function to keep text and calculations synced smoothly
@@ -307,11 +313,7 @@ async function placeOrder() {
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Placing Order...';
 
     try {
-        await fetch(SHEET_URL, {
-            method:'POST', mode:'no-cors',
-            headers:{'Content-Type':'application/json'},
-            body: JSON.stringify({ name, mobile, address, pincode, orderDetail, totalAmount })
-        });
+        await sendToSheet({ formType:'Order', name, mobile, address, pincode, orderDetail, totalAmount });
         closeCheckout();
         document.getElementById('successOverlay').classList.add('active');
         cartItems = [];
@@ -335,6 +337,79 @@ function fieldErr(id) {
 function closeSuccess() {
     document.getElementById('successOverlay').classList.remove('active');
     document.body.style.overflow = '';
+}
+
+// ============================================================
+// GOOGLE SHEET SYNC — shared helper
+// ============================================================
+// mode:'no-cors' means we can't read the response back, so we can't
+// know for certain the row was written. We only treat the request as
+// failed if the network call itself throws (offline, blocked, etc).
+function sendToSheet(payload) {
+    return fetch(SHEET_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ timestamp: new Date().toLocaleString('en-IN'), ...payload })
+    });
+}
+
+// ============================================================
+// CONTACT FORM -> Google Sheet ("Contact" tab)
+// ============================================================
+async function handleContactSubmit(e) {
+    e.preventDefault();
+
+    const name    = document.getElementById('ct-name').value.trim();
+    const email   = document.getElementById('ct-email').value.trim();
+    const phone   = document.getElementById('ct-phone').value.trim();
+    const message = document.getElementById('ct-message').value.trim();
+
+    if (!name)    { fieldErr('ct-name');    return; }
+    if (!email)   { fieldErr('ct-email');   return; }
+    if (!message) { fieldErr('ct-message'); return; }
+
+    const btn = document.getElementById('contactBtn');
+    const original = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+    try {
+        await sendToSheet({ formType: 'Contact', name, email, phone, message });
+        showToast('Message sent! We will get back to you soon.');
+        document.getElementById('contactForm').reset();
+    } catch {
+        showToast('Network error. Please try again.', true);
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = original;
+    }
+}
+
+// ============================================================
+// NEWSLETTER FORM -> Google Sheet ("Newsletter" tab)
+// ============================================================
+async function handleNewsletterSubmit(e) {
+    e.preventDefault();
+
+    const email = document.getElementById('nl-email').value.trim();
+    if (!email) { fieldErr('nl-email'); return; }
+
+    const btn = document.getElementById('newsletterBtn');
+    const original = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+    try {
+        await sendToSheet({ formType: 'Newsletter', email });
+        showToast('Subscribed! Thanks for joining Noble Fit.');
+        document.getElementById('newsletterForm').reset();
+    } catch {
+        showToast('Network error. Please try again.', true);
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = original;
+    }
 }
 
 // ============================================================
