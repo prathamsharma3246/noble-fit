@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed | Noble Fit</title>
+    <meta name="robots" content="noindex">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="announcement-bar">
+    🚚 Free Delivery Across India &nbsp;|&nbsp; Shop the Luxury Collection Now
+</div>
+
+<header class="main-header">
+    <div class="header-container">
+        <div class="logo"><a href="index.html"><img src="noble-fit-logo.png" alt="Noble Fit"></a></div>
+        <nav class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="index.html#shop">Shop</a>
+            <a href="index.html#contact">Contact Us</a>
+        </nav>
+        <div class="header-actions">
+            <i class="fas fa-moon" id="themeBtn"></i>
+        </div>
+    </div>
+</header>
+
+<section class="ty-section">
+    <div class="ty-card">
+        <div class="ty-check"><i class="fas fa-check-circle"></i></div>
+        <span class="ty-eyebrow">Order Confirmed</span>
+        <h1 id="tyHeading">Thank You for Shopping with Noble Fit!</h1>
+        <p class="ty-msg" id="tyMsg">Your order has been placed successfully. We'll reach out shortly to confirm delivery details.</p>
+
+        <div class="ty-orderid-row" id="tyOrderIdRow" style="display:none;">
+            <span>Order ID</span>
+            <strong id="tyOrderId">—</strong>
+        </div>
+
+        <div class="ty-details" id="tyDetails" style="display:none;">
+            <div class="ty-details-head"><i class="fas fa-receipt"></i> Order Summary</div>
+            <div class="ty-items" id="tyItems"></div>
+            <div class="ty-row ty-row-total">
+                <span>Total Paid on Delivery</span>
+                <span id="tyTotal">₹0</span>
+            </div>
+            <div class="ty-hr"></div>
+            <div class="ty-delivery">
+                <div class="ty-details-head"><i class="fas fa-map-marker-alt"></i> Delivery To</div>
+                <p id="tyName">—</p>
+                <p id="tyAddress">—</p>
+                <p id="tyMobile">—</p>
+            </div>
+        </div>
+
+        <div class="ty-actions">
+            <a href="index.html" class="btn btn-gold">Continue Shopping</a>
+            <a href="https://wa.me/918968350522" target="_blank" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> Chat With Us</a>
+        </div>
+
+        <p class="ty-note"><i class="fas fa-lock"></i> 100% Secure. Your order details have been recorded — our team will contact you soon.</p>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-links">
+        <a href="index.html">Home</a><a href="index.html#shop">Shop</a><a href="index.html#about">About Us</a>
+        <a href="index.html#contact">Contact Us</a>
+    </div>
+    <div class="footer-socials">
+        <a href="https://www.facebook.com/noblefitofficial" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.instagram.com/noblefit8968/" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://wa.me/918968350522" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    </div>
+    <p class="copyright">&copy; 2026 Noble Fit. All Rights Reserved.<br>Designed for Noble Fit by Pratham Sharma.</p>
+</footer>
+
+<script>
+    // Theme toggle (kept consistent with the rest of the site)
+    document.getElementById('themeBtn').addEventListener('click', () => {
+        const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+        document.documentElement.setAttribute('data-theme', dark ? 'light' : 'dark');
+        document.getElementById('themeBtn').className = dark ? 'fas fa-moon' : 'fas fa-sun';
+    });
+
+    // Pull the last order (saved by script.js just before redirecting here) and render it.
+    // If someone lands on this page directly with no order in session storage, we simply
+    // show the generic thank-you message above instead of an error.
+    (function renderOrder() {
+        let order = null;
+        try { order = JSON.parse(sessionStorage.getItem('nfLastOrder') || 'null'); } catch (e) { order = null; }
+        if (!order) return;
+
+        if (order.name) {
+            document.getElementById('tyHeading').textContent = `Thank You, ${order.name.split(' ')[0]}!`;
+        }
+        if (order.orderId) {
+            document.getElementById('tyOrderIdRow').style.display = 'flex';
+            document.getElementById('tyOrderId').textContent = order.orderId;
+        }
+
+        const items = Array.isArray(order.items) ? order.items : [];
+        if (items.length) {
+            document.getElementById('tyDetails').style.display = 'block';
+            document.getElementById('tyItems').innerHTML = items.map(item => `
+                <div class="ty-item">
+                    <div class="ty-item-thumb" style="background-image:url('${item.img || ''}')">
+                        ${!item.img ? '<i class="fas fa-tshirt"></i>' : ''}
+                    </div>
+                    <div class="ty-item-info">
+                        <p class="ty-item-name">${item.name}</p>
+                        <span>Size: ${item.size} &nbsp;•&nbsp; Qty: ${item.qty}</span>
+                    </div>
+                    <span class="ty-item-amt">₹${(item.price * item.qty).toLocaleString('en-IN')}</span>
+                </div>`).join('');
+            document.getElementById('tyTotal').textContent = order.totalAmount || '₹0';
+            document.getElementById('tyName').textContent = order.name || '';
+            document.getElementById('tyAddress').textContent = `${order.address || ''}${order.pincode ? ' - ' + order.pincode : ''}`;
+            document.getElementById('tyMobile').innerHTML = `<i class="fas fa-phone-alt"></i> ${order.mobile || ''}`;
+        }
+
+        // Order shown once — clear it so a page refresh/back doesn't re-show stale data
+        sessionStorage.removeItem('nfLastOrder');
+    })();
+</script>
+
+</body>
+</html>
