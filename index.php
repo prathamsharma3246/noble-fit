@@ -1,5 +1,5 @@
 <?php
-require\_once _ _DIR_ _ . '/admin/includes/auth.php';
+require_once __DIR__ . '/admin/includes/auth.php';
 $db = getDb();
 
 $productCount = $db->query("SELECT COUNT(*) c FROM products WHERE is_active=1")->fetch_assoc()['c'];
@@ -10,10 +10,10 @@ $revenue      = $db->query("SELECT COALESCE(SUM(total_amount),0) r FROM orders W
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Dashboard | Noble Fit Admin</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="admin.css">
+    <meta charset="UTF-8">
+    <title>Dashboard | Noble Fit Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
 </head>
 <body>
 <?php include __DIR__ . '/includes/topbar.php'; ?>
